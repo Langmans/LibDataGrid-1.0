@@ -1,4 +1,4 @@
-Inherits: [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md), [LibDataGridSortMixin](LibDataGridSortMixin.md)
+Inherits: [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md), [LibDataGridEventsMixin](LibDataGridEventsMixin.md), [LibDataGridSortMixin](LibDataGridSortMixin.md)
 
 ## Fields
 

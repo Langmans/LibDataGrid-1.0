@@ -6,12 +6,12 @@
 local lib = LibStub("LibDataGrid-1.0") --[[@as LibDataGrid]]
 if not lib.pending then return end
 
----@class LibDataGridBlizzardEventsMixin
+---@class LibDataGridBlizzardEventsMixin: LibDataGridEventsMixin
 ---@field Event table<string, string> the events, as CallbackRegistryMixin keeps them
 ---@field OnLoad fun(self: LibDataGridBlizzardEventsMixin)
 ---@field GenerateCallbackEvents fun(self: LibDataGridBlizzardEventsMixin, events: string[])
 ---@field TriggerEvent fun(self: LibDataGridBlizzardEventsMixin, event: string, view: LibDataGridBlizzardEventsMixin)
-local BlizzardEventsMixin = {}
+local BlizzardEventsMixin = CreateFromMixins(lib.EventsMixin)
 lib.BlizzardEventsMixin = BlizzardEventsMixin
 
 -- The events, as CallbackRegistryMixin:GenerateCallbackEvents takes them.

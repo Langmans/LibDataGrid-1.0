@@ -1,2 +1,2 @@
-Inherits: [LibDataGridViewMixin](LibDataGridViewMixin.md), [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md), [LibDataGridSortMixin](LibDataGridSortMixin.md)
+Inherits: [LibDataGridViewMixin](LibDataGridViewMixin.md), [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md), [LibDataGridEventsMixin](LibDataGridEventsMixin.md), [LibDataGridSortMixin](LibDataGridSortMixin.md)
 

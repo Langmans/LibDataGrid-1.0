@@ -11,6 +11,7 @@
 | [LibDataGridCompilerMixin](LibDataGridCompilerMixin.md) |  |
 | [LibDataGridCondition](LibDataGridCondition.md) |  |
 | [LibDataGridError](LibDataGridError.md) |  |
+| [LibDataGridEventsMixin](LibDataGridEventsMixin.md) |  |
 | [LibDataGridFormatterMixin](LibDataGridFormatterMixin.md) |  |
 | [LibDataGridGroup](LibDataGridGroup.md) |  |
 | [LibDataGridOperator](LibDataGridOperator.md) |  |

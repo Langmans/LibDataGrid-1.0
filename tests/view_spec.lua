@@ -225,6 +225,31 @@ describe("a view", function()
             end)
         end)
 
+        it("all come from EventsMixin, the base an adapter of a caller's starts from", function()
+            for _, adapter in ipairs({
+                lib.RegistryEventsMixin,
+                lib.BlizzardEventsMixin,
+                lib.CallbackHandlerEventsMixin,
+            }) do
+                assert.is_function(adapter.InitEvents)
+                assert.is_function(adapter.Notify)
+            end
+            local sent = {}
+            local Messages = CreateFromMixins(lib.EventsMixin, {
+                Notify = function(_, event)
+                    sent[#sent + 1] = event
+                end,
+            })
+            schema:NewView(Messages):ToggleSort("level")
+            assert.are.same({ lib.events.SortChanged }, sent)
+        end)
+
+        it("go nowhere through the base alone", function()
+            local quiet = schema:NewView(lib.EventsMixin)
+            quiet:ToggleSort("level")
+            assert.is_true(quiet:SetFilterText("[Level] = 10"))
+        end)
+
         it("say plainly when the library behind the adapter is not loaded", function()
             LibStub.libs["CallbackHandler-1.0"] = nil
             assert.has_error(function()

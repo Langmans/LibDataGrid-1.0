@@ -10,6 +10,7 @@
     <Script file="Mixins\FormatterMixin.lua"/>
     <Script file="Mixins\CompilerMixin.lua"/>
     <Script file="Mixins\SchemaMixin.lua"/>
+    <Script file="Mixins\Events\EventsMixin.lua"/>
     <Script file="Mixins\Events\RegistryEventsMixin.lua"/>
     <Script file="Mixins\Events\CallbackHandlerEventsMixin.lua"/>
     <Script file="Mixins\Events\BlizzardEventsMixin.lua"/>

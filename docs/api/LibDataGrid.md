@@ -6,6 +6,7 @@
 | CallbackHandlerEventsMixin | `LibDataGridCallbackHandlerEventsMixin` |  |
 | ColumnMixin | `LibDataGridColumnMixin` |  |
 | CompilerMixin | `LibDataGridCompilerMixin` |  |
+| EventsMixin | `LibDataGridEventsMixin` |  |
 | FormatterMixin | `LibDataGridFormatterMixin` |  |
 | ParserMixin | `LibDataGridParserMixin` |  |
 | RegistryEventsMixin | `LibDataGridRegistryEventsMixin` |  |

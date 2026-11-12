@@ -1,7 +1,6 @@
 -- The view's own events (an observer registry), the default adapter. It takes callbacks the way
 -- Blizzard's CallbackRegistryMixin does: RegisterCallback(event, func, owner), and a callback is
--- called with the owner, then the view. Every events adapter has InitEvents and Notify; the view
--- calls nothing else.
+-- called with the owner, then the view.
 
 local lib = LibStub("LibDataGrid-1.0") --[[@as LibDataGrid]]
 if not lib.pending then return end
@@ -11,9 +10,9 @@ if not lib.pending then return end
 ---@type table<table, LibDataGridCallback>
 local NONE = {}
 
----@class LibDataGridRegistryEventsMixin
+---@class LibDataGridRegistryEventsMixin: LibDataGridEventsMixin
 ---@field callbacks table<string, table<table, LibDataGridCallback>>
-local RegistryEventsMixin = {}
+local RegistryEventsMixin = CreateFromMixins(lib.EventsMixin)
 lib.RegistryEventsMixin = RegistryEventsMixin
 
 function RegistryEventsMixin:InitEvents()

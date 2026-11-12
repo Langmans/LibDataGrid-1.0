@@ -153,16 +153,19 @@ local view = schema:NewView(DG.CallbackHandlerEventsMixin)
 view.RegisterCallback(MyAddon, DG.events.SortChanged, function(event, view) end)
 ```
 
-Your own adapter is a mixin with `InitEvents()` and `Notify(event)`, for
-instance one that sends an AceEvent message:
+All three come from `DG.EventsMixin`, the base an adapter starts from: the view
+calls `InitEvents()` when it starts and `Notify(event)` when something changed,
+and the base does nothing for either. Your own adapter starts from it too and
+needs only its Notify, for instance one that sends an AceEvent message:
 
 ```lua
-local MessageEvents = {
-    InitEvents = function() end,
-    Notify = function(self, event) MyAddon:SendMessage("MYADDON_GRID_" .. event, self) end,
-}
+local MessageEvents = CreateFromMixins(DG.EventsMixin, {
+    Notify = function(view, event) MyAddon:SendMessage("MYADDON_GRID_" .. event, view) end,
+})
 local view = schema:NewView(MessageEvents)
 ```
+
+A view made with `DG.EventsMixin` alone sends no events at all.
 
 ## Fixed sets
 

@@ -19,7 +19,7 @@ flowchart LR
     end
     subgraph View["ViewMixin"]
         Sort["SortMixin<br/>multi-key, stable"]
-        Events["events adapter<br/>Registry · Blizzard · CallbackHandler"]
+        Events["EventsMixin adapter<br/>Registry · Blizzard · CallbackHandler"]
     end
     Grammar --> Parser & Formatter & Compiler
     Column --> Parser & Formatter & Compiler & Sort
@@ -48,7 +48,11 @@ flowchart LR
   the compiler turns the tree into one closure, built once per filter, so a
   refresh parses nothing and builds no tables.
 - **Observer** with **adapters**: the view only calls `InitEvents` and
-  `Notify(event)`; the adapter decides where the event goes.
+  `Notify(event)`; the adapter decides where the event goes. Lua has no
+  interfaces, so the contract is a base mixin, `EventsMixin`, that every
+  adapter is made from (`---@class X: LibDataGridEventsMixin` for the language
+  server). Its methods do nothing, which also makes it the null object: a view
+  made with it alone sends no events.
 
 ## Loading
 

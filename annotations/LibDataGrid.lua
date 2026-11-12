@@ -23,6 +23,7 @@
 ---@field FormatterMixin LibDataGridFormatterMixin
 ---@field CompilerMixin LibDataGridCompilerMixin
 ---@field SchemaMixin LibDataGridSchemaMixin
+---@field EventsMixin LibDataGridEventsMixin
 ---@field RegistryEventsMixin LibDataGridRegistryEventsMixin
 ---@field CallbackHandlerEventsMixin LibDataGridCallbackHandlerEventsMixin
 ---@field BlizzardEventsMixin LibDataGridBlizzardEventsMixin

@@ -5,9 +5,9 @@
 local lib = LibStub("LibDataGrid-1.0") --[[@as LibDataGrid]]
 if not lib.pending then return end
 
----@class LibDataGridCallbackHandlerEventsMixin
+---@class LibDataGridCallbackHandlerEventsMixin: LibDataGridEventsMixin
 ---@field handler CallbackHandlerRegistry
-local CallbackHandlerEventsMixin = {}
+local CallbackHandlerEventsMixin = CreateFromMixins(lib.EventsMixin)
 lib.CallbackHandlerEventsMixin = CallbackHandlerEventsMixin
 
 function CallbackHandlerEventsMixin:InitEvents()

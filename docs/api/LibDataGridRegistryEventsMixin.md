@@ -1,3 +1,5 @@
+Inherits: [LibDataGridEventsMixin](LibDataGridEventsMixin.md)
+
 ## Fields
 
 | Name | Type | Description |

@@ -13,4 +13,5 @@
 - Views: a filter and a stable sort on several keys over a list of rows, with
   header-click toggling (Ctrl adds a key).
 - FilterChanged and SortChanged through the view's own registry, Blizzard's
-  CallbackRegistryMixin or CallbackHandler-1.0.
+  CallbackRegistryMixin or CallbackHandler-1.0; each adapter, and any of a
+  caller's, comes from the EventsMixin base.
