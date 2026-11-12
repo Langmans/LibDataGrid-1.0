@@ -1,0 +1,10 @@
+## Interface: 16001, 11509
+## Title: LibDataGrid-1.0
+## Notes: Filters and sorts lists of rows: AND/OR filter expressions and multi-column sorting.
+## Author: Langmans
+## Version: @project-version@
+## X-License: MIT
+
+Libs\LibStub\LibStub.lua
+Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
+lib.xml

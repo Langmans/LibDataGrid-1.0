@@ -1,0 +1,18 @@
+-- luacov settings, used by `busted --coverage` and by tests/check.lua for the report.
+-- Only the library's own files count; LibStub (Libs/) and the tests do not. A file no test loads
+-- still shows up, at 0%, so it cannot slip past the 100% check.
+return {
+    statsfile = "coverage/luacov.stats.out",
+    reportfile = "coverage/lcov.info",
+    -- luacov matches the names without ".lua".
+    include = {
+        "^%./LibDataGrid%-1%.0$",
+        "^%./Core/",
+        "^%./Mixins/",
+        "^LibDataGrid%-1%.0$",
+        "^Core/",
+        "^Mixins/",
+    },
+    exclude = { "Libs/", "tests/" },
+    includeuntestedfiles = { "Core", "Mixins" },
+}

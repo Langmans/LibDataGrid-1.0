@@ -1,0 +1,18 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+    <!-- What an addon that embeds the library includes. LibStub must be loaded before (the
+         addon's own copy, or this one's .toc). Core\ holds the operator table, Mixins\ one
+         mixin per file, Mixins\Events\ the adapters a view sends its events through; a mixin
+         built from others comes after them. ViewMixin.lua comes last: it ends the loading. -->
+    <Script file="LibDataGrid-1.0.lua"/>
+    <Script file="Core\Grammar.lua"/>
+    <Script file="Mixins\ColumnMixin.lua"/>
+    <Script file="Mixins\ParserMixin.lua"/>
+    <Script file="Mixins\FormatterMixin.lua"/>
+    <Script file="Mixins\CompilerMixin.lua"/>
+    <Script file="Mixins\SchemaMixin.lua"/>
+    <Script file="Mixins\Events\RegistryEventsMixin.lua"/>
+    <Script file="Mixins\Events\CallbackHandlerEventsMixin.lua"/>
+    <Script file="Mixins\Events\BlizzardEventsMixin.lua"/>
+    <Script file="Mixins\SortMixin.lua"/>
+    <Script file="Mixins\ViewMixin.lua"/>
+</Ui>
