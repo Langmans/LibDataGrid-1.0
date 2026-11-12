@@ -1,0 +1,14 @@
+#!/bin/sh
+# Writes the API docs (docs/api) from the docblocks and adds them to the commit, so they never fall
+# behind the code. Git uses this folder's hooks after `git config core.hooksPath .githooks`, which
+# tests/setup-lua.ps1 sets. Without Lua or WoW Lua LS the hook only warns; CI's lint still fails on
+# docs that are out of date.
+
+lua=.lua/bin/lua.exe
+[ -x "$lua" ] || lua=${LUA:-lua}
+if ! command -v "$lua" >/dev/null 2>&1; then
+    echo "pre-commit: no Lua (.lua/bin or LUA), API docs not regenerated" >&2
+    exit 0
+fi
+"$lua" tests/check.lua docs || exit 1
+git add docs/api

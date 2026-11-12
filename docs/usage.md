@@ -164,6 +164,23 @@ local MessageEvents = {
 local view = schema:NewView(MessageEvents)
 ```
 
+## Fixed sets
+
+Every method and field is in the generated [API docs](api/index.md). The fixed
+sets of names are not classes, so they are here:
+
+| | |
+|---|---|
+| `DG.types` | `string`, `number`, `enum`, `boolean`, `date` |
+| `DG.joins` | `and`, `or` |
+| `DG.ops` | `eq` `ne` `gt` `ge` `lt` `le` `between` `notBetween` `contains` `notContains` `startsWith` `endsWith` `inList` `notInList` `blank` `notBlank` |
+| `DG.takes` | what an operator takes after it: `value`, `list`, `range` (none for the blank tests) |
+| `DG.events` | `FilterChanged`, `SortChanged` |
+| `DG.errors` | `unknownColumn` `unclosedColumn` `expectedCondition` `expectedOperator` `operatorNotForType` `expectedValue` `unclosedString` `badNumber` `badBoolean` `badDate` `expectedRangeAnd` `unknownChoice` `expectedList` `unclosedList` `unclosedGroup` `unexpected` |
+
+`DG.grammar` lists the operators in picker order and `DG.operators[id]` finds
+one; each has `id`, `token`, `label`, `takes`, `types` and `test`.
+
 ## Changing how a part works
 
 Every part is a mixin, and `lib:NewSchema(defs, ...)`, `schema:NewView(...)` and

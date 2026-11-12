@@ -30,7 +30,9 @@ frames. A filter box, a Builder dialog and a grid view come next.
 
 - [Using it in an addon](docs/usage.md): embedding, columns, filter text, the
   filter tree, sorting, keeping the filter, events.
-- [API](docs/api.md): every public function and fixed set.
+- [API](docs/api/index.md): every class, method and field, generated from the
+  docblocks by WoW Lua LS (`lua tests/check.lua docs`; the pre-commit hook runs
+  it, and CI fails when the docs are out of date).
 - [How it fits together](docs/architecture.md): the parts, a diagram, the
   patterns behind them.
 
@@ -46,8 +48,9 @@ highest minor. CI fails on a release tag that is not MINOR.
 
 The same setup as [LibGoThere-1.0](https://github.com/Langmans/LibGoThere-1.0):
 busted and luacov on Lua 5.1, StyLua, WoW Lua LS, all through `tests/check.lua`
-(`tests\setup-lua.ps1` builds the tools on Windows). Line and type coverage are
-held at 100%. `tests/wow.lua` stands in for the little of the game the library
+(`tests\setup-lua.ps1` builds the tools on Windows and turns on the hooks in
+`.githooks`). Line and type coverage are held at 100%, and `docs/api` is never
+edited by hand. `tests/wow.lua` stands in for the little of the game the library
 uses: `Mixin`, `CreateFromMixins`, `CallbackRegistryMixin`, `time`, `date`,
 `wipe`.
 

@@ -15,6 +15,7 @@ externals:
     path: CallbackHandler-1.0
 
 ignore:
+  - .githooks
   - annotations
   - coverage
   - docs

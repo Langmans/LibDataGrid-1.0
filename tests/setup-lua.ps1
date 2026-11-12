@@ -6,7 +6,8 @@
 # - LuaRocks, the standalone Windows build, with its config in .lua\config-5.1.lua;
 # - the pinned test rocks from libdatagrid-dev-1.rockspec (busted, luacov, ...), compiled with the
 #   same compiler as Lua;
-# - StyLua, the release binary.
+# - StyLua, the release binary;
+# - git's hooks path set to .githooks, for the pre-commit hook that writes the API docs.
 #
 # Safe to run again: each step is skipped when its result is already there. Afterwards, in a new
 # PowerShell, `.lua\bin\activate.ps1` puts the tools on PATH for that session, or call
@@ -67,5 +68,8 @@ if (-not (Test-Path (Join-Path $bin "stylua.exe"))) {
     Expand-Archive $zip -DestinationPath $bin
     Remove-Item -Recurse -Force $tmp
 }
+
+# The repository's own hooks: .githooks\pre-commit writes the API docs into docs\api.
+git -C $root config core.hooksPath .githooks
 
 Write-Host "Done. Run: .lua\bin\lua.exe tests\check.lua"
