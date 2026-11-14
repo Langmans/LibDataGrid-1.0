@@ -22,3 +22,5 @@
   Apply or Cancel). Plain frames on every client, a SkinMixin for an addon's
   own look, and DG.L for their words.
 - /libdatagrid in development copies: a demo window with the widgets.
+- The grid stripes every other row (SkinMixin:Stripe), and the pick list opens
+  over dialogs.
