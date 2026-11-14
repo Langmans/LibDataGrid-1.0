@@ -36,7 +36,7 @@ end
 ---The faint back of every other row in a grid.
 ---@param texture Texture
 function SkinMixin:Stripe(texture)
-    texture:SetColorTexture(1, 1, 1, 0.04)
+    texture:SetColorTexture(1, 1, 1, 0.08)
 end
 
 ---A label's font; the widgets make labels with GameFontHighlightSmall.

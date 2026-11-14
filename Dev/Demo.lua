@@ -24,7 +24,7 @@ local NAMES = {
 local FAMILIES = { "Wolf", "Cat", "Wind Serpent", "Bear", "Boar" }
 local ZONES = { "Elwynn Forest", "Westfall", "The Barrens", "Badlands" }
 local SPEEDS = { 1.0, 1.2, 1.5, 2.0 }
-local SIZE, PAD, TOP = { 600, 420 }, 10, 30
+local SIZE, PAD, TOP = { 680, 420 }, 10, 30
 
 ---Sample rows, the same each time but for when they were seen.
 ---@return LibDataGridRow[]
@@ -108,7 +108,7 @@ local function Open()
     demo.grid:AddFixedWidthColumn("speed", 50)
     demo.grid:AddFixedWidthColumn("rare", 50)
     demo.grid:AddFillColumn("zone")
-    demo.grid:AddFixedWidthColumn("seen", 125)
+    demo.grid:AddFixedWidthColumn("seen", 135)
     demo.grid:SetRows(Rows())
     lib.demo = demo
 end
