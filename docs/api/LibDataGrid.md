@@ -7,24 +7,95 @@
 | ColumnMixin | `LibDataGridColumnMixin` |  |
 | CompilerMixin | `LibDataGridCompilerMixin` |  |
 | EventsMixin | `LibDataGridEventsMixin` |  |
+| FilterBoxMixin | `LibDataGridFilterBoxMixin` |  |
 | FormatterMixin | `LibDataGridFormatterMixin` |  |
+| L | `table<string, string>` | the widgets' words, English unless an addon sets them |
 | ParserMixin | `LibDataGridParserMixin` |  |
+| PickerMixin | `LibDataGridPickerMixin` |  |
 | RegistryEventsMixin | `LibDataGridRegistryEventsMixin` |  |
+| SCROLLBAR_WIDTH | `number` |  |
 | SchemaMixin | `LibDataGridSchemaMixin` |  |
+| ScrollBarMixin | `LibDataGridScrollBarMixin` |  |
+| SkinMixin | `LibDataGridSkinMixin` |  |
 | SortMixin | `LibDataGridSortMixin` |  |
 | ViewMixin | `LibDataGridViewMixin` |  |
 | errors | `table<string, string>` |  |
 | events | `table<string, string>` |  |
 | grammar | `LibDataGridOperator[]` | the operators, in the order a picker lists them |
 | joins | `table<string, string>` |  |
+| name | `string` | the library's LibStub name |
 | operators | `table<string, LibDataGridOperator>` | each operator by id |
 | ops | `table<string, string>` | each operator's id by name |
 | pending | `boolean?` | set while this copy's files load |
+| pickList | `LibDataGridPickList?` | the pick list every picker shares, made when first opened |
 | takes | `table<string, string>` |  |
 | tokens | `LibDataGridOperator[]` | the operators as the parser tries them, longest token first |
 | types | `table<string, string>` |  |
 
 ## Methods
+
+### CreateFilterBox
+
+```lua
+function LibDataGrid:CreateFilterBox(parent, view, skin, ...)
+  -> LibDataGridFilterBoxMixin
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `parent` | `Frame` |  |
+| `view` | `LibDataGridView` |  |
+| `skin` | `LibDataGridSkinMixin?` |  |
+| `...` | `table` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `LibDataGridFilterBoxMixin` |  |
+
+### CreatePicker
+
+```lua
+function LibDataGrid:CreatePicker(parent, skin, OnPick)
+  -> LibDataGridPickerMixin
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `parent` | `Frame` |  |
+| `skin` | `LibDataGridSkinMixin?` |  |
+| `OnPick` | `fun(value: LibDataGridValue)` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `LibDataGridPickerMixin` |  |
+
+### CreateScrollBar
+
+```lua
+function LibDataGrid:CreateScrollBar(list, OnScroll)
+  -> LibDataGridScrollBarMixin
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `list` | `Frame` |  |
+| `OnScroll` | `fun(offset: number)` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `LibDataGridScrollBarMixin` |  |
 
 ### NewSchema
 

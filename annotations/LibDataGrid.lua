@@ -29,6 +29,17 @@
 ---@field BlizzardEventsMixin LibDataGridBlizzardEventsMixin
 ---@field SortMixin LibDataGridSortMixin
 ---@field ViewMixin LibDataGridViewMixin
+---@field name string the library's LibStub name
+---@field L table<string, string> the widgets' words, English unless an addon sets them
+---@field SCROLLBAR_WIDTH number
+---@field pickList LibDataGridPickList? the pick list every picker shares, made when first opened
+---@field SkinMixin LibDataGridSkinMixin
+---@field ScrollBarMixin LibDataGridScrollBarMixin
+---@field PickerMixin LibDataGridPickerMixin
+---@field FilterBoxMixin LibDataGridFilterBoxMixin
+---@field CreateScrollBar fun(self: LibDataGrid, list: Frame, OnScroll: fun(offset: number)): LibDataGridScrollBarMixin
+---@field CreatePicker fun(self: LibDataGrid, parent: Frame, skin: LibDataGridSkinMixin?, OnPick: fun(value: LibDataGridValue)): LibDataGridPickerMixin
+---@field CreateFilterBox fun(self: LibDataGrid, parent: Frame, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridFilterBoxMixin
 
 ---A row of the list: whatever table the caller keeps; columns read it.
 ---@alias LibDataGridRow table
@@ -87,6 +98,10 @@
 
 ---A schema as lib:NewSchema makes it, the caller's mixins included.
 ---@class LibDataGridSchema: LibDataGridSchemaMixin
+
+---Anything a view tells of its changes (ViewMixin:AddWidget): the library's widgets, or a caller's.
+---@class LibDataGridWidget
+---@field OnViewChanged fun(self: LibDataGridWidget, event: string)
 
 ---A view as schema:NewView makes it, the caller's mixins included.
 ---@class LibDataGridView: LibDataGridViewMixin

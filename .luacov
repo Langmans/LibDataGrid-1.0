@@ -9,10 +9,12 @@ return {
         "^%./LibDataGrid%-1%.0$",
         "^%./Core/",
         "^%./Mixins/",
+        "^%./Widgets/",
         "^LibDataGrid%-1%.0$",
         "^Core/",
         "^Mixins/",
+        "^Widgets/",
     },
     exclude = { "Libs/", "tests/" },
-    includeuntestedfiles = { "Core", "Mixins" },
+    includeuntestedfiles = { "Core", "Mixins", "Widgets" },
 }

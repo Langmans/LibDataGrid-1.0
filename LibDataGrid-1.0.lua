@@ -20,6 +20,9 @@ if not lib then return end
 -- turned away leaves `pending` unset, so its other files change nothing.
 lib.pending = true
 
+-- The library's name, for the few names the game sees (the pick list's frame).
+lib.name = MAJOR
+
 -- The events a view sends (ViewMixin:TriggerEvent).
 lib.events = {
     FilterChanged = "FilterChanged",

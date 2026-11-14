@@ -6,8 +6,38 @@ Inherits: [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md), [
 |------|------|-------------|
 | filter | `LibDataGridGroup` |  |
 | passes | `function` |  |
+| widgets | `LibDataGridWidget[]` |  |
 
 ## Methods
+
+### AddWidget
+
+```lua
+function LibDataGridViewMixin:AddWidget(widget)
+```
+
+A widget that shows this view (a filter box, a grid, a builder): it hears every change through  
+its OnViewChanged(event), whichever events adapter the view has. Added once however often asked.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `widget` | `LibDataGridWidget` |  |
+
+### Changed
+
+```lua
+function LibDataGridViewMixin:Changed(event)
+```
+
+Something changed: the widgets first, so they show it, then the events adapter.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `event` | `string` |  |
 
 ### FilterEdited
 

@@ -10,6 +10,7 @@ if not lib.pending then return end
 ---@class LibDataGridViewMixin: LibDataGridRegistryEventsMixin, LibDataGridSortMixin
 ---@field filter LibDataGridGroup
 ---@field passes LibDataGridPredicate
+---@field widgets LibDataGridWidget[]
 local ViewMixin = {}
 Mixin(ViewMixin, lib.RegistryEventsMixin, lib.SortMixin)
 lib.ViewMixin = ViewMixin
@@ -19,8 +20,28 @@ function ViewMixin:Init(schema)
     self.schema = schema
     self.filter = lib.NewFilter()
     self.passes = schema:Compile(self.filter)
+    self.widgets = {}
     self:InitEvents()
     self:InitSort()
+end
+
+---A widget that shows this view (a filter box, a grid, a builder): it hears every change through
+---its OnViewChanged(event), whichever events adapter the view has. Added once however often asked.
+---@param widget LibDataGridWidget
+function ViewMixin:AddWidget(widget)
+    for _, known in ipairs(self.widgets) do
+        if known == widget then return end
+    end
+    self.widgets[#self.widgets + 1] = widget
+end
+
+---Something changed: the widgets first, so they show it, then the events adapter.
+---@param event string
+function ViewMixin:Changed(event)
+    for _, widget in ipairs(self.widgets) do
+        widget:OnViewChanged(event)
+    end
+    self:Notify(event)
 end
 
 ---The view's own filter tree, for a caller that edits it in place and then calls FilterEdited.
@@ -32,7 +53,7 @@ end
 ---The filter tree changed in place: use it from now on.
 function ViewMixin:FilterEdited()
     self.passes = self.schema:Compile(self.filter)
-    self:Notify(lib.events.FilterChanged)
+    self:Changed(lib.events.FilterChanged)
 end
 
 ---A copy of the filter tree, to keep.

@@ -13,7 +13,7 @@ if not lib.pending then return end
 ---@field sortValues table<LibDataGridRow, LibDataGridValue?>[]
 ---@field order table<LibDataGridRow, number>
 ---@field compare fun(a: LibDataGridRow, b: LibDataGridRow): boolean
----@field Notify fun(self: LibDataGridSortMixin, event: string)
+---@field Changed fun(self: LibDataGridSortMixin, event: string)
 local SortMixin = {}
 lib.SortMixin = SortMixin
 
@@ -33,7 +33,7 @@ end
 ---@param sort LibDataGridSortKey[]
 function SortMixin:SetSort(sort)
     self.sort = lib.Copy(sort) --[[@as LibDataGridSortKey[] ]]
-    self:Notify(lib.events.SortChanged)
+    self:Changed(lib.events.SortChanged)
 end
 
 ---@return LibDataGridSortKey[]
@@ -69,7 +69,7 @@ function SortMixin:ToggleSort(key, additive)
     else
         sort[index].descending = true
     end
-    self:Notify(lib.events.SortChanged)
+    self:Changed(lib.events.SortChanged)
 end
 
 ---Whether row a goes before row b. Needs SortRows to have filled in the values; one column's

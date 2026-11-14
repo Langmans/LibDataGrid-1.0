@@ -11,6 +11,18 @@
 
 ## Methods
 
+### Changed
+
+```lua
+function LibDataGridSortMixin:Changed(event)
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `event` | `string` |  |
+
 ### Compare
 
 ```lua
@@ -52,18 +64,6 @@ function LibDataGridSortMixin:GetSort()
 ```lua
 function LibDataGridSortMixin:InitSort()
 ```
-
-### Notify
-
-```lua
-function LibDataGridSortMixin:Notify(event)
-```
-
-**Parameters:**
-
-| Name | Type | Description |
-|------|------|-------------|
-| `event` | `string` |  |
 
 ### SetSort
 

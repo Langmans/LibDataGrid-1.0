@@ -198,6 +198,23 @@ describe("a view", function()
         end)
     end)
 
+    describe("its widgets", function()
+        it("hear every change, whichever events adapter the view has", function()
+            local quiet = schema:NewView(lib.EventsMixin)
+            local heard = {}
+            local widget = {
+                OnViewChanged = function(_, event)
+                    heard[#heard + 1] = event
+                end,
+            }
+            quiet:AddWidget(widget)
+            quiet:AddWidget(widget)
+            quiet:SetFilterText("[Level] = 10")
+            quiet:ToggleSort("level")
+            assert.are.same({ lib.events.FilterChanged, lib.events.SortChanged }, heard)
+        end)
+    end)
+
     describe("its events through an adapter", function()
         it("go through CallbackHandler-1.0: the event's name, then the view", function()
             local cbView = schema:NewView(lib.CallbackHandlerEventsMixin)

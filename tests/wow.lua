@@ -1,7 +1,9 @@
 -- The little of the game the library needs: Blizzard's Mixin and CreateFromMixins (as
 -- Blizzard_SharedXMLBase/Mixin.lua has them on both clients), CallbackRegistryMixin for the
--- Blizzard events adapter, time, date and wipe. NewClient() resets those
--- globals and LibStub and loads the .toc's files into the fresh state, so tests never share it.
+-- Blizzard events adapter, time, date, wipe, and frames (tests/frames.lua). NewClient() resets
+-- those globals and LibStub and loads the .toc's files into the fresh state, so tests never share it.
+
+local frames = require("tests.frames")
 
 ---Loads every file of the .toc into the current globals.
 local function LoadToc()
@@ -14,6 +16,7 @@ end
 ---@return LibDataGrid
 function NewClient()
     LibStub = nil
+    frames.Install()
 
     function Mixin(object, ...)
         for i = 1, select("#", ...) do
