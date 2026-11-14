@@ -36,6 +36,7 @@
 | [LibDataGridSkinMixin](LibDataGridSkinMixin.md) |  |
 | [LibDataGridSortKey](LibDataGridSortKey.md) |  |
 | [LibDataGridSortMixin](LibDataGridSortMixin.md) |  |
+| [LibDataGridToken](LibDataGridToken.md) |  |
 | [LibDataGridView](LibDataGridView.md) |  |
 | [LibDataGridViewMixin](LibDataGridViewMixin.md) |  |
 | [LibDataGridWidget](LibDataGridWidget.md) |  |

@@ -33,6 +33,48 @@ function SkinMixin:Field(frame)
     back:SetColorTexture(1, 1, 1, 0.08)
 end
 
+-- Each kind of piece of filter text in its colour, as a colour code takes it (alpha, red, green,
+-- blue). All keep WCAG AA or better on the dark edit box.
+local K = lib.tokenKinds
+local TOKEN_COLOURS = {
+    [K.column] = "ffffd100",
+    [K.operator] = "ff80c0ff",
+    [K.keyword] = "ffff8040",
+    [K.value] = "ffffffff",
+    [K.bracket] = "ffa0a0a0",
+    [K.error] = "ffff4040",
+}
+
+---The colour of a kind of piece of filter text (lib.tokenKinds), as a colour code takes it.
+---@param kind string
+---@return string
+function SkinMixin:TokenColour(kind)
+    return TOKEN_COLOURS[kind]
+end
+
+---Text as the game shows it, a | doubled so it is not read as the start of a code.
+---@param text string
+---@return string
+local function Escape(text)
+    return (text:gsub("|", "||"))
+end
+
+---Filter text with colour codes, each piece in its kind's colour, for showing (not for parsing).
+---@param schema LibDataGridSchema
+---@param text string
+---@return string
+function SkinMixin:Highlight(schema, text)
+    local parts, at = {}, 1
+    for _, token in ipairs((schema:Tokens(text))) do
+        parts[#parts + 1] = Escape(text:sub(at, token.start - 1))
+        local piece = Escape(text:sub(token.start, token.finish))
+        parts[#parts + 1] = "|c" .. self:TokenColour(token.kind) .. piece .. "|r"
+        at = token.finish + 1
+    end
+    parts[#parts + 1] = Escape(text:sub(at))
+    return table.concat(parts)
+end
+
 ---The back of every other row in a grid. On the dark backdrop, text over it keeps WCAG AAA (7:1)
 ---in white (16.6:1), gold (11.3:1) and green (12.1:1); red keeps AA (5.1:1).
 ---@param texture Texture

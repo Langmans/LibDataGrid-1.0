@@ -8,6 +8,7 @@ Inherits: Frame, Region, ScriptRegion, Object, FrameScriptObject, ScriptRegionRe
 | builder | `LibDataGridBuilderMixin?` | made when first opened |
 | clear | `Button` | the x that empties the filter |
 | edit | `EditBox` |  |
+| filterText | `string` | the text as typed; the edit box may show it coloured |
 | hint | `FontString` |  |
 | open | `Button` | opens the Builder |
 | skin | `LibDataGridSkinMixin` |  |
@@ -30,6 +31,21 @@ function LibDataGridFilterBoxMixin:Clear()
 ```
 
 Empties the filter.
+
+### GetText
+
+```lua
+function LibDataGridFilterBoxMixin:GetText()
+  -> string
+```
+
+The filter text in the box as typed: never the coloured text the box shows.
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
 
 ### OnViewChanged
 
@@ -59,11 +75,26 @@ function LibDataGridFilterBoxMixin:Reset()
 
 Shows the view's filter and drops the hint.
 
-### UpdateClear
+### SetText
 
 ```lua
-function LibDataGridFilterBoxMixin:UpdateClear()
+function LibDataGridFilterBoxMixin:SetText(text)
 ```
 
-The clear button shows only when there is text to clear.
+Puts filter text in the box.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `string` |  |
+
+### ShowText
+
+```lua
+function LibDataGridFilterBoxMixin:ShowText()
+```
+
+Shows the text: plain while the box is being typed in, so the cursor and a marked error sit  
+where they should; coloured by kind otherwise. The clear button shows when there is text.
 

@@ -1,7 +1,9 @@
 -- The filter box: the view's filter as text in an edit box, applied with Enter or Apply. Text that
 -- does not parse leaves the filter as it was; the parser's message shows under the box and the
 -- text it is about is highlighted. Escape goes back to the view's filter. A filter set elsewhere
--- shows here too, unless the box is being typed in.
+-- shows here too, unless the box is being typed in. While it is not being typed in, the text is
+-- coloured by kind (the skin's Highlight); the box keeps the plain text apart, and that is what it
+-- applies.
 
 local lib = LibStub("LibDataGrid-1.0") --[[@as LibDataGrid]]
 if not lib.pending then return end
@@ -19,6 +21,7 @@ local CLEAR, CLEAR_ICON = 14, "Interface\\FriendsFrame\\ClearBroadcastIcon"
 ---@field hint FontString
 ---@field clear Button the x that empties the filter
 ---@field builder LibDataGridBuilderMixin? made when first opened
+---@field filterText string the text as typed; the edit box may show it coloured
 local FilterBoxMixin = {}
 lib.FilterBoxMixin = FilterBoxMixin
 
@@ -29,16 +32,31 @@ function FilterBoxMixin:OpenBuilder()
     builder:Open()
 end
 
----Shows the view's filter and drops the hint.
-function FilterBoxMixin:Reset()
-    self.edit:SetText(self.view:GetFilterText())
-    self.hint:Hide()
-    self:UpdateClear()
+---The filter text in the box as typed: never the coloured text the box shows.
+---@return string
+function FilterBoxMixin:GetText()
+    return self.filterText
 end
 
----The clear button shows only when there is text to clear.
-function FilterBoxMixin:UpdateClear()
-    self.clear:SetShown(self.edit:GetText() ~= "")
+---Puts filter text in the box.
+---@param text string
+function FilterBoxMixin:SetText(text)
+    self.filterText = text
+    self:ShowText()
+end
+
+---Shows the text: plain while the box is being typed in, so the cursor and a marked error sit
+---where they should; coloured by kind otherwise. The clear button shows when there is text.
+function FilterBoxMixin:ShowText()
+    local text = self.filterText
+    self.edit:SetText(self.edit:HasFocus() and text or self.skin:Highlight(self.view.schema, text))
+    self.clear:SetShown(text ~= "")
+end
+
+---Shows the view's filter and drops the hint.
+function FilterBoxMixin:Reset()
+    self:SetText(self.view:GetFilterText())
+    self.hint:Hide()
 end
 
 ---Empties the filter.
@@ -49,7 +67,7 @@ end
 
 ---Applies the box's text to the view, or shows why it cannot.
 function FilterBoxMixin:Apply()
-    local ok, err = self.view:SetFilterText(self.edit:GetText())
+    local ok, err = self.view:SetFilterText(self.filterText)
     if ok then
         self.edit:ClearFocus()
         self:Reset()
@@ -83,9 +101,17 @@ end
 ---@param edit EditBox
 ---@param userInput boolean
 local function OnTextChanged(edit, userInput)
+    if not userInput then return end
     local box = edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]
-    if userInput then box.hint:Hide() end
-    box:UpdateClear()
+    box.filterText = edit:GetText()
+    box.hint:Hide()
+    box.clear:SetShown(box.filterText ~= "")
+end
+
+---Focus gained or lost: plain text to type in, or coloured text to look at.
+---@param edit EditBox
+local function OnFocusChanged(edit)
+    (edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]):ShowText()
 end
 
 ---@param button Button
@@ -135,6 +161,8 @@ function lib:CreateFilterBox(parent, view, skin, ...)
     box.edit:SetScript("OnEnterPressed", OnEnterPressed)
     box.edit:SetScript("OnEscapePressed", OnEscapePressed)
     box.edit:SetScript("OnTextChanged", OnTextChanged)
+    box.edit:SetScript("OnEditFocusGained", OnFocusChanged)
+    box.edit:SetScript("OnEditFocusLost", OnFocusChanged)
     box.edit:SetTextInsets(0, CLEAR, 0, 0)
 
     -- The x inside the box's right end, as the game's own search boxes have it.

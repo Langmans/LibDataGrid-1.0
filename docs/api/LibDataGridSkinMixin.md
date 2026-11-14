@@ -70,6 +70,28 @@ A label's font; the widgets make labels with GameFontHighlightSmall.
 |------|------|-------------|
 | `fontString` | `FontString` |  |
 
+### Highlight
+
+```lua
+function LibDataGridSkinMixin:Highlight(schema, text)
+  -> string
+```
+
+Filter text with colour codes, each piece in its kind's colour, for showing (not for parsing).
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `schema` | `LibDataGridSchema` |  |
+| `text` | `string` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
+
 ### Stripe
 
 ```lua
@@ -84,4 +106,25 @@ in white (16.6:1), gold (11.3:1) and green (12.1:1); red keeps AA (5.1:1).
 | Name | Type | Description |
 |------|------|-------------|
 | `texture` | `Texture` |  |
+
+### TokenColour
+
+```lua
+function LibDataGridSkinMixin:TokenColour(kind)
+  -> string
+```
+
+The colour of a kind of piece of filter text (lib.tokenKinds), as a colour code takes it.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `kind` | `string` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
 

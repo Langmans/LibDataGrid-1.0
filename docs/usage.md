@@ -223,6 +223,32 @@ local skin = CreateFromMixins(DG.SkinMixin, {
 local box = DG:CreateFilterBox(panel, view, skin)
 ```
 
+The filter box colours its text by kind while it is not being typed in (plain
+while it is, so the cursor and a marked error sit where they should), and the
+Builder colours the filter under its lines the same way. The colours come from
+the skin's `TokenColour(kind)`, a colour code's `aarrggbb`:
+
+```lua
+local skin = CreateFromMixins(DG.SkinMixin, {
+    TokenColour = function(self, kind)
+        if kind == DG.tokenKinds.column then return "ff00ccff" end
+        return DG.SkinMixin.TokenColour(self, kind)
+    end,
+})
+```
+
+| kind | default | contrast on black |
+|---|---|---|
+| `column` | gold `ffffd100` | 14.4:1 |
+| `operator` | light blue `ff80c0ff` | 10.9:1 |
+| `keyword` | orange `ffff8040` | 8.4:1 |
+| `value` | white `ffffffff` | 21:1 |
+| `bracket` | grey `ffa0a0a0` | 8.0:1 |
+| `error` | red `ffff4040`, from where the text stops parsing | 6.1:1 |
+
+`schema:Tokens(text)` gives the pieces themselves (`{ kind, start, finish }`),
+for an addon that colours filter text elsewhere.
+
 The words (`Apply`, `Builder`, `+ condition`, ...) are in `DG.L`; an addon with
 its own locales sets them after loading.
 

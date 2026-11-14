@@ -51,18 +51,36 @@ local NOT, NOT_SIGN = Pattern("not"), Pattern("!")
 ---@type string, string, number, LibDataGridSchema
 local src, lower, at, schema
 
+-- The pieces read so far, while SchemaMixin:Tokens asks for them; nil for a plain Parse.
+---@type LibDataGridToken[]?
+local marks
+
+local K = lib.tokenKinds
+
+---Notes a piece of the text, when Tokens is collecting them.
+---@param kind string
+---@param start number
+---@param finish number
+local function Mark(kind, start, finish)
+    if marks then marks[#marks + 1] = { kind = kind, start = start, finish = finish } end
+end
+
 local function SkipSpace()
     at = src:find("%S", at) or #src + 1
 end
 
----Moves past the token at the reader if it is this one.
+---Moves past the token at the reader if it is this one, noting it as `kind` when given.
 ---@param pattern string
+---@param kind string?
 ---@return boolean
-local function Take(pattern)
+local function Take(pattern, kind)
     SkipSpace()
+    local start = at
     local _, finish = lower:find(pattern, at)
-    if finish then at = finish + 1 end
-    return finish ~= nil
+    if not finish then return false end
+    at = finish + 1
+    if kind then Mark(kind, start, finish) end
+    return true
 end
 
 ---Stops the parse: the error for the text from pos to finish, by default the word or the one
@@ -106,6 +124,7 @@ local function ParseValue(column)
     local text, start, finish = ReadValue()
     local value, code = column:ParseValue(text)
     if code then Fail(code, start, finish) end
+    Mark(K.value, start, finish)
     return value --[[@as LibDataGridValue]]
 end
 
@@ -114,6 +133,7 @@ end
 local function ParseList(column)
     SkipSpace()
     if src:sub(at, at) ~= "(" then Fail(E.expectedList, at) end
+    Mark(K.bracket, at, at)
     at = at + 1
     local list = {}
     while true do
@@ -121,6 +141,7 @@ local function ParseList(column)
         SkipSpace()
         local char = src:sub(at, at)
         if char ~= "," and char ~= ")" then Fail(E.unclosedList, at) end
+        Mark(K.bracket, at, at)
         at = at + 1
         if char == ")" then return list end
     end
@@ -137,6 +158,7 @@ local function ParseCondition()
     local column = schema:Find(src:sub(at + 1, close - 1))
     if not column then Fail(E.unknownColumn, at + 1, close - 1) end
     ---@cast column LibDataGridColumnMixin
+    Mark(K.column, at, close)
     at = close + 1
 
     SkipSpace()
@@ -151,6 +173,7 @@ local function ParseCondition()
     if not op then Fail(E.expectedOperator, start) end
     ---@cast op LibDataGridOperator
     if not op.types[column.type] then Fail(E.operatorNotForType, start, at - 1) end
+    Mark(K.operator, start, at - 1)
 
     ---@type LibDataGridCondition
     local condition = { column = column.key, op = op.id }
@@ -160,7 +183,7 @@ local function ParseCondition()
         condition.value = ParseList(column)
     elseif op.takes == takes.range then
         local low = ParseValue(column)
-        if not (Take(AND) or Take(AND_SIGN)) then Fail(E.expectedRangeAnd, at) end
+        if not (Take(AND, K.keyword) or Take(AND_SIGN, K.keyword)) then Fail(E.expectedRangeAnd, at) end
         condition.value = { low, ParseValue(column) }
     end
     return condition
@@ -172,7 +195,7 @@ local ParseOr
 ---NOT, a group in brackets, or a condition.
 ---@return LibDataGridNode
 local function ParseUnary()
-    if Take(NOT) or Take(NOT_SIGN) then
+    if Take(NOT, K.keyword) or Take(NOT_SIGN, K.keyword) then
         local node = ParseUnary()
         if node.children and not node.negate then
             node.negate = true
@@ -180,9 +203,9 @@ local function ParseUnary()
         end
         return { join = lib.joins["and"], negate = true, children = { node } }
     end
-    if Take("^%(") then
+    if Take("^%(", K.bracket) then
         local node = ParseOr()
-        if not Take("^%)") then Fail(E.unclosedGroup, at) end
+        if not Take("^%)", K.bracket) then Fail(E.unclosedGroup, at) end
         return node
     end
     return ParseCondition()
@@ -196,7 +219,7 @@ end
 ---@return LibDataGridNode
 local function ParseJoined(join, word, sign, Next)
     local children = { Next() }
-    while Take(word) or Take(sign) do
+    while Take(word, K.keyword) or Take(sign, K.keyword) do
         children[#children + 1] = Next()
     end
     if #children == 1 then return children[1] end
@@ -241,4 +264,19 @@ function ParserMixin:Parse(text)
     if ok then return result end
     if type(result) ~= "table" then error(result, 0) end
     return nil, result --[[@as LibDataGridError]]
+end
+
+---The pieces of filter text as the parser reads them, for syntax highlighting: each with its kind
+---(lib.tokenKinds) and the characters it covers. Text that does not parse is one error piece from
+---where it stops making sense to the end; the error comes second.
+---@param text string
+---@return LibDataGridToken[] tokens
+---@return LibDataGridError? err
+function ParserMixin:Tokens(text)
+    marks = {}
+    local _, err = self:Parse(text)
+    local tokens = marks
+    marks = nil
+    if err and err.pos <= #text then tokens[#tokens + 1] = { kind = K.error, start = err.pos, finish = #text } end
+    return tokens, err
 end

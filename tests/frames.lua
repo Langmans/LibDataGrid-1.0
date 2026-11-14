@@ -146,11 +146,16 @@ function Region:IsEnabled()
 end
 
 -- An edit box: focus, the cursor and the highlighted range, as the client counts them (from 0).
+-- Gaining or losing focus fires OnEditFocusGained / OnEditFocusLost, as on the client.
 function Region:SetFocus()
+    if self.focus then return end
     self.focus = true
+    if self.scripts.OnEditFocusGained then self.scripts.OnEditFocusGained(self) end
 end
 function Region:ClearFocus()
+    if not self.focus then return end
     self.focus = false
+    if self.scripts.OnEditFocusLost then self.scripts.OnEditFocusLost(self) end
 end
 function Region:HasFocus()
     return self.focus == true

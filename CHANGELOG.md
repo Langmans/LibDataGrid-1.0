@@ -24,3 +24,9 @@
 - /libdatagrid in development copies: a demo window with the widgets.
 - The grid stripes every other row (SkinMixin:Stripe), and the pick list opens
   over dialogs.
+- A clear button in the filter box; true and false as a tick and a cross in
+  grid cells (DG.BOOLEAN_CELLS).
+- Syntax highlighting: schema:Tokens(text) gives the pieces of filter text by
+  kind; the filter box shows its text coloured while not being typed in, and
+  the Builder colours the filter under its lines. Colours from
+  SkinMixin:TokenColour.

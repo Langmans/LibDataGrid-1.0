@@ -8,6 +8,7 @@
 ---@field types table<string, string>
 ---@field joins table<string, string>
 ---@field errors table<string, string>
+---@field tokenKinds table<string, string>
 ---@field takes table<string, string>
 ---@field grammar LibDataGridOperator[] the operators, in the order a picker lists them
 ---@field operators table<string, LibDataGridOperator> each operator by id
@@ -98,6 +99,12 @@
 ---@field pos number the first character it is about, from 1
 ---@field finish number the last
 ---@field message string in English
+
+---A piece of filter text (SchemaMixin:Tokens).
+---@class LibDataGridToken
+---@field kind string lib.tokenKinds
+---@field start number the first character, from 1
+---@field finish number the last
 
 ---@class LibDataGridSortKey
 ---@field key string

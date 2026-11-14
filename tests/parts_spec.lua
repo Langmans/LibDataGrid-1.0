@@ -25,6 +25,46 @@ describe("the skin", function()
     end)
 end)
 
+describe("the skin's syntax highlighting", function()
+    local lib, schema
+    before_each(function()
+        lib = NewClient()
+        schema = require("tests.fixtures").Schema(lib)
+    end)
+
+    it("colours each piece by its kind and leaves the spaces between", function()
+        assert.are.equal(
+            "|cffffd100[Level]|r |cff80c0ff>=|r |cffffffff1|r |cffff8040AND|r |cffa0a0a0(|r|cffffd100[Rare]|r |cff80c0ff=|r |cffffffffTRUE|r|cffa0a0a0)|r",
+            lib.SkinMixin:Highlight(schema, "[Level] >= 1 AND ([Rare] = TRUE)")
+        )
+    end)
+
+    it("doubles a | so the game shows it rather than reading a code", function()
+        assert.are.equal(
+            "|cffffd100[Rare]|r |cff80c0ff=|r |cfffffffftrue|r |cffff8040|||r |cffffd100[Level]|r |cff80c0ff>|r |cffffffff1|r",
+            lib.SkinMixin:Highlight(schema, "[Rare] = true | [Level] > 1")
+        )
+    end)
+
+    it("colours what does not parse as an error, and text it never reached as it is", function()
+        assert.are.equal(
+            "|cffffd100[Level]|r |cff80c0ff>|r |cffff4040ten|r",
+            lib.SkinMixin:Highlight(schema, "[Level] > ten")
+        )
+        assert.are.equal("|cffffd100[Level]|r |cff80c0ff>|r ", lib.SkinMixin:Highlight(schema, "[Level] > "))
+        assert.are.equal("", lib.SkinMixin:Highlight(schema, ""))
+    end)
+
+    it("takes an addon's own colours", function()
+        local skin = CreateFromMixins(lib.SkinMixin, {
+            TokenColour = function()
+                return "ff00ff00"
+            end,
+        })
+        assert.are.equal("|cff00ff00[Rare]|r |cff00ff00=|r |cff00ff00true|r", skin:Highlight(schema, "[Rare] = true"))
+    end)
+end)
+
 describe("a scrollbar", function()
     local lib, list, bar, scrolled
     before_each(function()

@@ -24,6 +24,14 @@ describe("the builder", function()
         return table.concat(out, " ")
     end
 
+    ---The filter text under the lines, without its colours; checks it is coloured as the skin does.
+    local function preview()
+        local shown = builder.preview:GetText()
+        local text = shown:gsub("|c%x%x%x%x%x%x%x%x", ""):gsub("|r", ""):gsub("||", "|")
+        assert.are.equal(lib.SkinMixin:Highlight(view.schema, text), shown)
+        return text
+    end
+
     ---The line showing the entry at this place.
     local function line(index)
         return builder.lines[index]
@@ -38,7 +46,7 @@ describe("the builder", function()
         assert.are.equal("at most", line(2).opPicker.label:GetText())
         assert.are.equal("20", line(2).valueEdit:GetText())
         assert.are.equal("Cat", line(4).valuePicker.label:GetText())
-        assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2)", builder.preview:GetText())
+        assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2)", preview())
         assert.is_false(line(1).remove:IsShown())
         assert.is_true(line(3).remove:IsShown())
     end)
@@ -46,7 +54,7 @@ describe("the builder", function()
     it("changes only its copy until Apply, and Cancel leaves the view as it was", function()
         frames.Click(line(1).join)
         frames.Click(line(3).negate)
-        assert.are.equal("[Level] <= 20 OR NOT ([Family] = Cat OR [Speed] < 2)", builder.preview:GetText())
+        assert.are.equal("[Level] <= 20 OR NOT ([Family] = Cat OR [Speed] < 2)", preview())
         assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2)", view:GetFilterText())
         frames.ClickText(builder, lib.L.CANCEL)
         assert.is_false(builder:IsShown())
@@ -65,12 +73,9 @@ describe("the builder", function()
         assert.are.equal("group0 condition1 group1 condition2 condition2 add2 condition1 add1", shape())
         assert.are.equal("Name", line(7).columnPicker.label:GetText())
         assert.are.equal("equals", line(7).opPicker.label:GetText())
-        assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2)", builder.preview:GetText())
+        assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2)", preview())
         frames.Type(line(7).valueEdit, "Prowler")
-        assert.are.equal(
-            "[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2) AND [Name] = Prowler",
-            builder.preview:GetText()
-        )
+        assert.are.equal("[Level] <= 20 AND ([Family] = Cat OR [Speed] < 2) AND [Name] = Prowler", preview())
         frames.Click(line(6).addGroup)
         assert.are.equal(
             "group0 condition1 group1 condition2 condition2 group2 condition3 add3 add2 condition1 add1",
@@ -80,7 +85,7 @@ describe("the builder", function()
 
     it("removes a condition or a group", function()
         frames.Click(line(4).remove)
-        assert.are.equal("[Level] <= 20 AND [Speed] < 2", builder.preview:GetText())
+        assert.are.equal("[Level] <= 20 AND [Speed] < 2", preview())
         frames.Click(line(3).remove)
         assert.are.equal("group0 condition1 add1", shape())
     end)
@@ -129,10 +134,7 @@ describe("the builder", function()
         assert.are.equal("5", line(2).valueEdit:GetText())
         line(5).opPicker.OnPick(ops.blank)
         assert.is_false(line(5).valueEdit:IsShown())
-        assert.are.equal(
-            "[Level] BETWEEN 5 AND 15 AND ([Family] IN (Cat, Wolf) OR [Speed] IS BLANK)",
-            builder.preview:GetText()
-        )
+        assert.are.equal("[Level] BETWEEN 5 AND 15 AND ([Family] IN (Cat, Wolf) OR [Speed] IS BLANK)", preview())
     end)
 
     it("picks true or false for a yes/no column", function()

@@ -236,7 +236,8 @@ end
 
 ---The copy as filter text, under the lines.
 function BuilderMixin:ShowPreview()
-    self.preview:SetText(self.view.schema:Format(self.tree))
+    local schema = self.view.schema
+    self.preview:SetText(self.skin:Highlight(schema, schema:Format(self.tree)))
 end
 
 ---Opens on a fresh copy of the view's filter.

@@ -33,6 +33,7 @@
 | pending | `boolean?` | set while this copy's files load |
 | pickList | `LibDataGridPickList?` | the pick list every picker shares, made when first opened |
 | takes | `table<string, string>` |  |
+| tokenKinds | `table<string, string>` |  |
 | tokens | `LibDataGridOperator[]` | the operators as the parser tries them, longest token first |
 | types | `table<string, string>` |  |
 

@@ -44,6 +44,16 @@ lib.joins = {
     ["or"] = "or",
 }
 
+-- The kinds of piece filter text is made of, for syntax highlighting (SchemaMixin:Tokens).
+lib.tokenKinds = {
+    column = "column",
+    operator = "operator",
+    keyword = "keyword",
+    value = "value",
+    bracket = "bracket",
+    error = "error",
+}
+
 -- Why filter text did not parse: an error's code, for a caller that words it itself.
 lib.errors = {
     unknownColumn = "unknownColumn",
