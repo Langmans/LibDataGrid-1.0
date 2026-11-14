@@ -77,7 +77,7 @@ function LibDataGridSkinMixin:Stripe(texture)
 ```
 
 The back of every other row in a grid. On the dark backdrop, text over it keeps WCAG AAA (7:1)  
-in white (12.6:1), gold (8.7:1) and green (9.2:1); red falls to 3.9:1.
+in white (16.6:1), gold (11.3:1) and green (12.1:1); red keeps AA (5.1:1).
 
 **Parameters:**
 
