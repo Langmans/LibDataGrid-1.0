@@ -33,10 +33,11 @@ function SkinMixin:Field(frame)
     back:SetColorTexture(1, 1, 1, 0.08)
 end
 
----The faint back of every other row in a grid.
+---The faint back of every other row in a grid. On the dark backdrop the white cell text keeps a
+---contrast of 16.6:1 over it (WCAG AAA is 7:1).
 ---@param texture Texture
 function SkinMixin:Stripe(texture)
-    texture:SetColorTexture(1, 1, 1, 0.08)
+    texture:SetColorTexture(1, 1, 1, 0.12)
 end
 
 ---A label's font; the widgets make labels with GameFontHighlightSmall.
