@@ -73,6 +73,21 @@ describe("a filter box", function()
         assert.are.equal("[Lev", box.edit:GetText())
     end)
 
+    it("clears the filter with its x, which shows only when there is text", function()
+        assert.is_true(box.clear:IsShown())
+        enter("[Diet] = Meat")
+        frames.Click(box.clear)
+        assert.are.equal("", view:GetFilterText())
+        assert.are.equal("", box.edit:GetText())
+        assert.is_false(box.hint:IsShown())
+        assert.is_false(box.clear:IsShown())
+        assert.is_false(box.edit:HasFocus())
+        frames.Type(box.edit, "[")
+        assert.is_true(box.clear:IsShown())
+        frames.Type(box.edit, "")
+        assert.is_false(box.clear:IsShown())
+    end)
+
     it("takes a skin and the caller's mixins", function()
         local skinned = {}
         local skin = CreateFromMixins(lib.SkinMixin, {

@@ -8,6 +8,7 @@ if not lib.pending then return end
 
 local ROW, HINT, BUTTON = 22, 16, 70
 local ERROR_COLOUR = { 1, 0.3, 0.3 }
+local CLEAR, CLEAR_ICON = 14, "Interface\\FriendsFrame\\ClearBroadcastIcon"
 
 ---@class LibDataGridFilterBoxMixin: Frame, LibDataGridWidget
 ---@field view LibDataGridView
@@ -16,6 +17,7 @@ local ERROR_COLOUR = { 1, 0.3, 0.3 }
 ---@field apply Button
 ---@field open Button opens the Builder
 ---@field hint FontString
+---@field clear Button the x that empties the filter
 ---@field builder LibDataGridBuilderMixin? made when first opened
 local FilterBoxMixin = {}
 lib.FilterBoxMixin = FilterBoxMixin
@@ -31,6 +33,18 @@ end
 function FilterBoxMixin:Reset()
     self.edit:SetText(self.view:GetFilterText())
     self.hint:Hide()
+    self:UpdateClear()
+end
+
+---The clear button shows only when there is text to clear.
+function FilterBoxMixin:UpdateClear()
+    self.clear:SetShown(self.edit:GetText() ~= "")
+end
+
+---Empties the filter.
+function FilterBoxMixin:Clear()
+    self.edit:ClearFocus()
+    self.view:SetFilterModel(nil)
 end
 
 ---Applies the box's text to the view, or shows why it cannot.
@@ -69,9 +83,14 @@ end
 ---@param edit EditBox
 ---@param userInput boolean
 local function OnTextChanged(edit, userInput)
-    if userInput then
-        (edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]).hint:Hide()
-    end
+    local box = edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]
+    if userInput then box.hint:Hide() end
+    box:UpdateClear()
+end
+
+---@param button Button
+local function OnClearClick(button)
+    (button:GetParent() --[[@as LibDataGridFilterBoxMixin]]):Clear()
 end
 
 ---@param button Button
@@ -116,6 +135,18 @@ function lib:CreateFilterBox(parent, view, skin, ...)
     box.edit:SetScript("OnEnterPressed", OnEnterPressed)
     box.edit:SetScript("OnEscapePressed", OnEscapePressed)
     box.edit:SetScript("OnTextChanged", OnTextChanged)
+    box.edit:SetTextInsets(0, CLEAR, 0, 0)
+
+    -- The x inside the box's right end, as the game's own search boxes have it.
+    box.clear = CreateFrame("Button", nil, box)
+    box.clear:SetSize(CLEAR, CLEAR)
+    box.clear:SetPoint("RIGHT", box.edit, "RIGHT", -2, 0)
+    box.clear:SetFrameLevel(box.edit:GetFrameLevel() + 2)
+    local icon = box.clear:CreateTexture(nil, "ARTWORK")
+    icon:SetAllPoints()
+    icon:SetTexture(CLEAR_ICON)
+    icon:SetAlpha(0.6)
+    box.clear:SetScript("OnClick", OnClearClick)
 
     box.hint = box:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
     box.hint:SetPoint("TOPLEFT", box.edit, "BOTTOMLEFT", 0, -2)

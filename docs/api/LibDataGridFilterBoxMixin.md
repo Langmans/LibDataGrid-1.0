@@ -6,6 +6,7 @@ Inherits: Frame, Region, ScriptRegion, Object, FrameScriptObject, ScriptRegionRe
 |------|------|-------------|
 | apply | `Button` |  |
 | builder | `LibDataGridBuilderMixin?` | made when first opened |
+| clear | `Button` | the x that empties the filter |
 | edit | `EditBox` |  |
 | hint | `FontString` |  |
 | open | `Button` | opens the Builder |
@@ -21,6 +22,14 @@ function LibDataGridFilterBoxMixin:Apply()
 ```
 
 Applies the box's text to the view, or shows why it cannot.
+
+### Clear
+
+```lua
+function LibDataGridFilterBoxMixin:Clear()
+```
+
+Empties the filter.
 
 ### OnViewChanged
 
@@ -49,4 +58,12 @@ function LibDataGridFilterBoxMixin:Reset()
 ```
 
 Shows the view's filter and drops the hint.
+
+### UpdateClear
+
+```lua
+function LibDataGridFilterBoxMixin:UpdateClear()
+```
+
+The clear button shows only when there is text to clear.
 

@@ -108,6 +108,12 @@ end
 function Region:SetFrameStrata(strata)
     self.strata = strata
 end
+function Region:SetFrameLevel(level)
+    self.level = level
+end
+function Region:GetFrameLevel()
+    return self.level or 1
+end
 function Region:SetBackdropColor(r, g, b, a)
     self.backdropColor = { r, g, b, a }
 end
