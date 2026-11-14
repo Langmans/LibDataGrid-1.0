@@ -10,12 +10,10 @@ local NO_CHOICES = {}
 
 -- What a cell shows for true and false: the ready check's tick and cross (on both clients). Filter
 -- text still writes true and false. An addon may set its own.
+local TICK = "|TInterface\\RaidFrame\\ReadyCheck-Ready:14|t"
+local CROSS = "|TInterface\\RaidFrame\\ReadyCheck-NotReady:14|t"
 ---@type table<boolean, string>
-lib.BOOLEAN_CELLS = lib.BOOLEAN_CELLS
-    or {
-        [true] = "|TInterface\\RaidFrame\\ReadyCheck-Ready:14|t",
-        [false] = "|TInterface\\RaidFrame\\ReadyCheck-NotReady:14|t",
-    }
+lib.BOOLEAN_CELLS = lib.BOOLEAN_CELLS or { [true] = TICK, [false] = CROSS }
 
 ---A date as MySQL writes one, `2026-11-12` or `2026-11-12 18:30[:05]`, as a local time in seconds;
 ---nil for anything else, a day the month does not have included.
