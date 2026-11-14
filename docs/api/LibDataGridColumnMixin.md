@@ -19,8 +19,8 @@ function LibDataGridColumnMixin:CellText(row)
   -> string
 ```
 
-What a grid's cell shows for the row: the definition's text function, else the value as filter  
-text writes it, nothing for a blank one.
+What a grid's cell shows for the row: the definition's text function, else a tick or a cross for  
+true and false, else the value as filter text writes it; nothing for a blank one.
 
 **Parameters:**
 

@@ -8,6 +8,15 @@ local T, E = lib.types, lib.errors
 ---@type LibDataGridChoice[]
 local NO_CHOICES = {}
 
+-- What a cell shows for true and false: the ready check's tick and cross (on both clients). Filter
+-- text still writes true and false. An addon may set its own.
+---@type table<boolean, string>
+lib.BOOLEAN_CELLS = lib.BOOLEAN_CELLS
+    or {
+        [true] = "|TInterface\\RaidFrame\\ReadyCheck-Ready:14|t",
+        [false] = "|TInterface\\RaidFrame\\ReadyCheck-NotReady:14|t",
+    }
+
 ---A date as MySQL writes one, `2026-11-12` or `2026-11-12 18:30[:05]`, as a local time in seconds;
 ---nil for anything else, a day the month does not have included.
 ---@param text string
@@ -73,14 +82,15 @@ function ColumnMixin:Init(def)
     self.cellText = def.text
 end
 
----What a grid's cell shows for the row: the definition's text function, else the value as filter
----text writes it, nothing for a blank one.
+---What a grid's cell shows for the row: the definition's text function, else a tick or a cross for
+---true and false, else the value as filter text writes it; nothing for a blank one.
 ---@param row LibDataGridRow
 ---@return string
 function ColumnMixin:CellText(row)
     if self.cellText then return self.cellText(row) end
     local value = self:Value(row)
     if value == nil or lib.IsBlank(value) then return "" end
+    if type(value) == "boolean" then return lib.BOOLEAN_CELLS[value] end
     return self:FormatValue(value)
 end
 

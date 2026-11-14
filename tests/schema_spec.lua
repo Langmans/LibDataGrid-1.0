@@ -125,6 +125,21 @@ describe("a schema", function()
         end)
     end)
 
+    describe("a column's cell", function()
+        it("shows true and false as a green tick and a red cross, a blank as nothing", function()
+            local rare = schema:Column("rare")
+            assert.truthy(rare:CellText({ rare = true }):find("ReadyCheck-Ready", 1, true))
+            assert.truthy(rare:CellText({ rare = false }):find("ReadyCheck-NotReady", 1, true))
+            assert.are.equal("", rare:CellText({}))
+            assert.are.equal("true", rare:FormatValue(true))
+        end)
+
+        it("takes an addon's own marks for true and false", function()
+            lib.BOOLEAN_CELLS[true] = "yes"
+            assert.are.equal("yes", schema:Column("rare"):CellText({ rare = true }))
+        end)
+    end)
+
     describe("a column's value to sort by", function()
         it("is the number, the folded string, the choice's text, or 0 and 1", function()
             local row = fixtures.Rows()[5]

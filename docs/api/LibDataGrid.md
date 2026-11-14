@@ -2,6 +2,7 @@
 
 | Name | Type | Description |
 |------|------|-------------|
+| BOOLEAN_CELLS | `table<boolean, string>` | what a cell shows for true and false |
 | BlizzardEventsMixin | `LibDataGridBlizzardEventsMixin` |  |
 | BuilderMixin | `LibDataGridBuilderMixin` |  |
 | CallbackHandlerEventsMixin | `LibDataGridCallbackHandlerEventsMixin` |  |

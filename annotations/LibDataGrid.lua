@@ -32,6 +32,7 @@
 ---@field name string the library's LibStub name
 ---@field L table<string, string> the widgets' words, English unless an addon sets them
 ---@field SCROLLBAR_WIDTH number
+---@field BOOLEAN_CELLS table<boolean, string> what a cell shows for true and false
 ---@field pickList LibDataGridPickList? the pick list every picker shares, made when first opened
 ---@field SkinMixin LibDataGridSkinMixin
 ---@field ScrollBarMixin LibDataGridScrollBarMixin
