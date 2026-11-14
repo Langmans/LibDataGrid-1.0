@@ -42,6 +42,22 @@ describe("filter text as tokens", function()
         }, tokens('[Level] >= 10 AND ([Family] in (Cat, Wolf) | NOT [Name] NOT   CONTAINS "a b")'))
     end)
 
+    it("takes && and || as one keyword each", function()
+        assert.are.same({
+            { K.column, "[Rare]" },
+            { K.operator, "=" },
+            { K.value, "true" },
+            { K.keyword, "&&" },
+            { K.column, "[Level]" },
+            { K.operator, ">" },
+            { K.value, "1" },
+            { K.keyword, "||" },
+            { K.column, "[Level]" },
+            { K.operator, "<" },
+            { K.value, "0" },
+        }, tokens("[Rare] = true && [Level] > 1 || [Level] < 0"))
+    end)
+
     it("reads BETWEEN's AND as part of the operator, not as the AND that joins", function()
         assert.are.same({
             { K.column, "[Level]" },

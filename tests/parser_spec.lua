@@ -66,6 +66,16 @@ describe("parsing filter text", function()
         assert.are.same(group("and", { cond("rare", ops.eq, true) }, true), schema:Parse("![Rare] = true"))
     end)
 
+    it("reads && and || as AND and OR too, as PHP writes them", function()
+        assert.are.same(
+            group("or", {
+                group("and", { cond("level", ops.gt, 1), cond("rare", ops.eq, true) }),
+                cond("level", ops.between, { 1, 5 }),
+            }),
+            schema:Parse("[Level] > 1 && [Rare] = true || [Level] BETWEEN 1 && 5")
+        )
+    end)
+
     it("takes keywords, operators and column names in any case and spacing", function()
         assert.are.same(
             group("and", { cond("level", ops.gt, 1), cond("name", ops.startsWith, "Tim") }),

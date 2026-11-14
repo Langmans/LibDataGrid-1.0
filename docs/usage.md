@@ -70,7 +70,7 @@ redraw.
 | | |
 |---|---|
 | columns | `[Label]` or `[key]`, any case |
-| joins | `AND` / `&`, `OR` / `\|`, `NOT` / `!`; AND binds before OR; brackets group |
+| joins | `AND` / `&` / `&&`, `OR` / `\|` / `\|\|`, `NOT` / `!`; AND binds before OR; brackets group |
 | numbers, dates | `=` `!=` `>` `>=` `<` `<=` `BETWEEN a AND b` `NOT BETWEEN a AND b` `IS BLANK` `IS NOT BLANK` |
 | text | `=` `!=` `CONTAINS` `NOT CONTAINS` `STARTS WITH` `ENDS WITH` `IN (a, b)` `NOT IN (a, b)` `IS BLANK` `IS NOT BLANK` |
 | choices | `=` `!=` `IN (a, b)` `NOT IN (a, b)` `IS BLANK` `IS NOT BLANK`, by the choice's text |

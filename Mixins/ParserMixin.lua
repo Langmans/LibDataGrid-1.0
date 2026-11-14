@@ -43,8 +43,9 @@ local OPERATORS = {}
 for i, op in ipairs(lib.tokens) do
     OPERATORS[i] = Pattern(op.token)
 end
-local AND, AND_SIGN = Pattern("and"), Pattern("&")
-local OR, OR_SIGN = Pattern("or"), Pattern("|")
+-- The signs one or two at a time: & and &&, | and ||, as PHP and C write them.
+local AND, AND_SIGN = Pattern("and"), "^&&?"
+local OR, OR_SIGN = Pattern("or"), "^||?"
 local NOT, NOT_SIGN = Pattern("not"), Pattern("!")
 
 -- The text being read, lower-cased, where the reader is, and whose columns. One Parse at a time.
