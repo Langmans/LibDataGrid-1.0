@@ -76,8 +76,8 @@ A label's font; the widgets make labels with GameFontHighlightSmall.
 function LibDataGridSkinMixin:Stripe(texture)
 ```
 
-The faint back of every other row in a grid. On the dark backdrop the white cell text keeps a  
-contrast of 16.6:1 over it (WCAG AAA is 7:1).
+The back of every other row in a grid. On the dark backdrop, text over it keeps WCAG AAA (7:1)  
+in white (12.6:1), gold (8.7:1) and green (9.2:1); red falls to 3.9:1.
 
 **Parameters:**
 
