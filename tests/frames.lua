@@ -105,6 +105,12 @@ end
 function Region:SetTexCoord(...)
     self.texCoord = { ... }
 end
+function Region:SetFrameStrata(strata)
+    self.strata = strata
+end
+function Region:SetBackdropColor(r, g, b, a)
+    self.backdropColor = { r, g, b, a }
+end
 function Region:SetBackdrop(backdrop)
     self.backdrop = backdrop
 end

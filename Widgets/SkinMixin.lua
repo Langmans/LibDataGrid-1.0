@@ -21,7 +21,7 @@ lib.SkinMixin = SkinMixin
 function SkinMixin:Backdrop(frame)
     local panel = frame --[[@as BackdropTemplate]]
     panel:SetBackdrop(PANEL)
-    panel:SetBackdropColor(0, 0, 0, 0.9)
+    panel:SetBackdropColor(0, 0, 0, 0.95)
     panel:SetBackdropBorderColor(0.4, 0.4, 0.4)
 end
 

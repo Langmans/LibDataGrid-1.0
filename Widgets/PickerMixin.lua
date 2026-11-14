@@ -58,7 +58,8 @@ local function PickList(skin)
     if lib.pickList then return lib.pickList end
     local name = lib.name .. "PickList"
     local list = CreateFrame("Frame", name, UIParent, "BackdropTemplate") --[[@as LibDataGridPickList]]
-    list:SetFrameStrata("DIALOG")
+    -- Above DIALOG: a picker in the Builder dialog opens its list over the dialog's own buttons.
+    list:SetFrameStrata("FULLSCREEN_DIALOG")
     list:SetClampedToScreen(true)
     list:Hide()
     table.insert(UISpecialFrames, name)
