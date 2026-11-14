@@ -42,14 +42,18 @@ describe("filter text as tokens", function()
         }, tokens('[Level] >= 10 AND ([Family] in (Cat, Wolf) | NOT [Name] NOT   CONTAINS "a b")'))
     end)
 
-    it("reads BETWEEN's AND as a keyword between two values", function()
+    it("reads BETWEEN's AND as part of the operator, not as the AND that joins", function()
         assert.are.same({
             { K.column, "[Level]" },
             { K.operator, "BETWEEN" },
             { K.value, "1" },
-            { K.keyword, "&" },
+            { K.operator, "&" },
             { K.value, "5" },
-        }, tokens("[Level] BETWEEN 1 & 5"))
+            { K.keyword, "AND" },
+            { K.column, "[Rare]" },
+            { K.operator, "=" },
+            { K.value, "true" },
+        }, tokens("[Level] BETWEEN 1 & 5 AND [Rare] = true"))
     end)
 
     it("marks everything from where the text stops making sense as an error", function()

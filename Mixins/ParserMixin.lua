@@ -183,7 +183,8 @@ local function ParseCondition()
         condition.value = ParseList(column)
     elseif op.takes == takes.range then
         local low = ParseValue(column)
-        if not (Take(AND, K.keyword) or Take(AND_SIGN, K.keyword)) then Fail(E.expectedRangeAnd, at) end
+        -- Part of BETWEEN, so marked as the operator, not as the AND that joins conditions.
+        if not (Take(AND, K.operator) or Take(AND_SIGN, K.operator)) then Fail(E.expectedRangeAnd, at) end
         condition.value = { low, ParseValue(column) }
     end
     return condition
