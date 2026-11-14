@@ -9,6 +9,7 @@
 | key | `string` |  |
 | label | `string` |  |
 | read | `(fun(row: LibDataGridRow):number \| string \| nil \| boolean)?` |  |
+| renderer | `LibDataGridRenderer?` | draws the column's cells in a grid instead of text |
 | type | `string` |  |
 
 ## Methods

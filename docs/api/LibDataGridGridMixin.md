@@ -10,8 +10,8 @@ Inherits: Frame, Region, ScriptRegion, Object, FrameScriptObject, ScriptRegionRe
 | count | `number` | how many pass |
 | heads | `LibDataGridGridHead[]` |  |
 | lines | `LibDataGridGridLine[]` |  |
-| rows | `table[]` | every row, as the owner gave them |
-| shown | `table[]` | the rows that pass, in order |
+| rows | `table \| number \| string[]` | every row, as the owner gave them |
+| shown | `table \| number \| string[]` | the rows that pass, in order |
 | skin | `LibDataGridSkinMixin` |  |
 | view | `LibDataGridView` |  |
 
@@ -93,6 +93,28 @@ function LibDataGridGridMixin:Layout()
 ```
 
 Places the headers and cells by the columns' widths, and makes as many lines as fit.
+
+### NewCell
+
+```lua
+function LibDataGridGridMixin:NewCell(line, column)
+  -> FontString
+```
+
+A text cell for a column without a renderer.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `line` | `LibDataGridGridLine` |  |
+| `column` | `LibDataGridColumnMixin` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `FontString` |  |
 
 ### OnRowClick
 

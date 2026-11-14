@@ -32,6 +32,7 @@
 | [LibDataGridPickRow](LibDataGridPickRow.md) |  |
 | [LibDataGridPickerMixin](LibDataGridPickerMixin.md) |  |
 | [LibDataGridRegistryEventsMixin](LibDataGridRegistryEventsMixin.md) |  |
+| [LibDataGridRenderer](LibDataGridRenderer.md) |  |
 | [LibDataGridSchema](LibDataGridSchema.md) |  |
 | [LibDataGridSchemaMixin](LibDataGridSchemaMixin.md) |  |
 | [LibDataGridScrollBarMixin](LibDataGridScrollBarMixin.md) |  |

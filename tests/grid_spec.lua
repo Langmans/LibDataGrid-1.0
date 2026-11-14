@@ -166,6 +166,33 @@ describe("a grid", function()
         assert.are.same({ "LEFT", "RIGHT", "CENTER" }, heads)
     end)
 
+    it("draws a column with its renderer: a region made once per line, filled for each row", function()
+        local made, filled = 0, {}
+        local Icon = {
+            Create = function(_, line)
+                made = made + 1
+                return line:CreateTexture()
+            end,
+            Fill = function(_, region, row)
+                region:SetTexture(row.icon)
+                filled[#filled + 1] = row.icon
+            end,
+        }
+        local schema = lib:NewSchema({ { key = "icon", renderer = Icon }, { key = "name" } })
+        local own = lib:CreateGrid(UIParent, schema:NewView())
+        own:SetSize(200, 20 + 2 * 18)
+        own:AddFixedWidthColumn("icon", 18)
+        own:AddFillColumn("name")
+        own:SetRows({ { icon = 1, name = "a" }, { icon = 2, name = "b" }, { icon = 3, name = "c" } })
+        assert.are.equal(2, made)
+        assert.are.same({ 1, 2 }, filled)
+        assert.are.equal(1, own.lines[1].cells[1].texture)
+        assert.are.equal("a", own.lines[1].cells[2]:GetText())
+        own.bar:ScrollTo(1)
+        assert.are.equal(2, made)
+        assert.are.equal(3, own.lines[2].cells[1].texture)
+    end)
+
     it("says plainly when a column is not in the schema", function()
         assert.has_error(function()
             grid:AddFillColumn("diet")

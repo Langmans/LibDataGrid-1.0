@@ -4,7 +4,7 @@ Inherits: Button, Frame
 
 | Name | Type | Description |
 |------|------|-------------|
-| cells | `FontString[]` |  |
-| row | `table?` |  |
+| cells | `Region[]` | a text per column, or the region its renderer made |
+| row | `table \| number \| string?` |  |
 | stripe | `Texture` | the back shown on every other row |
 

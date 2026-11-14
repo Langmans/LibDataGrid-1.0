@@ -2,12 +2,12 @@
 
 | Name | Type | Description |
 |------|------|-------------|
-| order | `table<table, number>` |  |
+| order | `table<table \| number \| string, number>` |  |
 | schema | `LibDataGridSchema` |  |
 | sort | `LibDataGridSortKey[]` |  |
 | sortColumns | `LibDataGridColumnMixin[]` |  |
 | sortDescending | `table<number, boolean?>` |  |
-| sortValues | `table<table, number \| string \| nil \| boolean>[]` |  |
+| sortValues | `table<table \| number \| string, number \| string \| nil \| boolean>[]` |  |
 
 ## Methods
 

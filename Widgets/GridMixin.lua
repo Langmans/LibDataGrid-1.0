@@ -25,7 +25,7 @@ local DOWN, UP = { 0, 0.5625, 0, 1 }, { 0, 0.5625, 1, 0 }
 ---@field order FontString
 
 ---@class LibDataGridGridLine: Button
----@field cells FontString[]
+---@field cells Region[] a text per column, or the region its renderer made
 ---@field stripe Texture the back shown on every other row
 ---@field row LibDataGridRow?
 
@@ -120,6 +120,18 @@ function GridMixin:AddFillColumn(key, weight)
     self:AddColumn({ column = self:FindColumn(key), weight = weight or 1 })
 end
 
+---A text cell for a column without a renderer.
+---@param line LibDataGridGridLine
+---@param column LibDataGridColumnMixin
+---@return FontString
+function GridMixin:NewCell(line, column)
+    local cell = line:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    cell:SetJustifyH(column.align)
+    cell:SetWordWrap(false)
+    self.skin:Font(cell)
+    return cell
+end
+
 ---Places the headers and cells by the columns' widths, and makes as many lines as fit.
 function GridMixin:Layout()
     local fixed, weights = 0, 0
@@ -148,18 +160,18 @@ function GridMixin:Layout()
         self.heads[i]:SetWidth(width)
         self.heads[i]:ClearAllPoints()
         self.heads[i]:SetPoint("TOPLEFT", x, 0)
+        local renderer = entry.column.renderer
         for _, line in ipairs(self.lines) do
             local cell = line.cells[i]
             if not cell then
-                cell = line:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-                cell:SetJustifyH(entry.column.align)
-                cell:SetWordWrap(false)
-                self.skin:Font(cell)
+                cell = renderer and renderer:Create(line, entry.column) or self:NewCell(line, entry.column)
                 line.cells[i] = cell
             end
-            cell:SetWidth(width - 2 * PAD)
+            -- A renderer's region takes the whole column; a text keeps a margin each side.
+            local pad = renderer and 0 or PAD
+            cell:SetWidth(width - 2 * pad)
             cell:ClearAllPoints()
-            cell:SetPoint("LEFT", x + PAD, 0)
+            cell:SetPoint("LEFT", x + pad, 0)
         end
         x = x + width
     end
@@ -180,7 +192,12 @@ function GridMixin:Draw()
         line.stripe:SetShown(at % 2 == 0)
         if row then
             for i, entry in ipairs(self.columns) do
-                line.cells[i]:SetText(entry.column:CellText(row))
+                local column = entry.column
+                if column.renderer then
+                    column.renderer:Fill(line.cells[i], row, column)
+                else
+                    (line.cells[i] --[[@as FontString]]):SetText(column:CellText(row))
+                end
             end
         end
     end

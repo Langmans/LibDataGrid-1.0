@@ -88,9 +88,9 @@ function ViewMixin:SetFilterText(text)
 end
 
 ---Fills `out` with the rows that pass the filter, sorted, and clears what is left past them.
----@param rows table[]
----@param out table[]
----@return table[] out
+---@param rows LibDataGridRow[]
+---@param out LibDataGridRow[]
+---@return LibDataGridRow[] out
 ---@return number n
 function ViewMixin:Refresh(rows, out)
     local passes, order, n = self.passes, wipe(self.order), 0

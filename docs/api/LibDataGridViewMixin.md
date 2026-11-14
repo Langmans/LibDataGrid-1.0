@@ -108,7 +108,7 @@ function LibDataGridViewMixin:Init(schema)
 
 ```lua
 function LibDataGridViewMixin:Refresh(rows, out)
-  -> table[], number
+  -> table | number | string[], number
 ```
 
 Fills `out` with the rows that pass the filter, sorted, and clears what is left past them.
@@ -117,14 +117,14 @@ Fills `out` with the rows that pass the filter, sorted, and clears what is left 
 
 | Name | Type | Description |
 |------|------|-------------|
-| `rows` | `table[]` |  |
-| `out` | `table[]` |  |
+| `rows` | `LibDataGridRow[]` |  |
+| `out` | `LibDataGridRow[]` |  |
 
 **Returns:**
 
 | Name | Type | Description |
 |------|------|-------------|
-| `out` | `table[]` |  |
+| `out` | `table \| number \| string[]` |  |
 | `n` | `number` |  |
 
 ### SetFilterModel

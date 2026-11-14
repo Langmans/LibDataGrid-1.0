@@ -211,6 +211,25 @@ grid:SetRows(beasts)                                -- again, or grid:Refresh(),
   the filter, so nothing is lost while it is filled in. Apply hands the copy to
   the view; Cancel, the close button or Escape drops it.
 
+### Cells of your own
+
+A column's `renderer` draws its grid cells itself, as AG Grid's cell renderers
+do: `Create(line, column)` makes a region once per line (the grid places it at
+the column's left edge, with the column's full width), and `Fill(region, row,
+column)` shows a row in it at every draw. For an icon:
+
+```lua
+local Icon = {
+    Create = function(self, line) local icon = line:CreateTexture() icon:SetHeight(16) return icon end,
+    Fill = function(self, icon, row) icon:SetTexture(row.icon) end,
+}
+{ key = "icon", label = "", renderer = Icon }
+```
+
+Text with colour codes needs no renderer: a column's `text(row)` may return
+`|cff00ff00Claw 3|r`. Rows may be ids (numbers or strings) rather than tables,
+as long as every column has a `value` function.
+
 ### Their look
 
 Every widget takes a skin: `DG.SkinMixin` draws plain (a dark backdrop, dark

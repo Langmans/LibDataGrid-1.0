@@ -51,8 +51,9 @@
 ---@field CreatePicker fun(self: LibDataGrid, parent: Frame, skin: LibDataGridSkinMixin?, OnPick: fun(value: LibDataGridValue)): LibDataGridPickerMixin
 ---@field CreateFilterBox fun(self: LibDataGrid, parent: Frame, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridFilterBoxMixin
 
----A row of the list: whatever table the caller keeps; columns read it.
----@alias LibDataGridRow table
+---A row of the list: whatever the caller keeps, a table or an id; columns read it (a column
+---without a value function reads row[key], so needs a table). Rows are table keys: each unique.
+---@alias LibDataGridRow table|number|string
 
 ---One value in a column or a condition. A date is a time in seconds.
 ---@alias LibDataGridValue number|string|boolean
@@ -83,7 +84,15 @@
 ---@field choices? LibDataGridChoice[]|fun(): LibDataGridChoice[] an enum's choices
 ---@field caseSensitive? boolean compare a string column's text as it is
 ---@field align? string how cells and header line up (lib.aligns); left when not given
+---@field renderer? LibDataGridRenderer draws the column's grid cells itself (an icon, a button)
 ---@field mixin? table goes over ColumnMixin
+
+---Draws a column's cells in a grid, as AG Grid's cell renderers do: Create makes a region once per
+---line, which the grid places at the column's left edge with the column's full width; Fill shows a
+---row in it at every draw.
+---@class LibDataGridRenderer
+---@field Create fun(self: LibDataGridRenderer, line: Button, column: LibDataGridColumnMixin): Region
+---@field Fill fun(self: LibDataGridRenderer, region: Region, row: LibDataGridRow, column: LibDataGridColumnMixin)
 
 ---@class LibDataGridCondition
 ---@field column string a column's key

@@ -67,6 +67,7 @@ end
 ---@field read? fun(row: LibDataGridRow): LibDataGridValue?
 ---@field cellText? fun(row: LibDataGridRow): string
 ---@field align string lib.aligns
+---@field renderer? LibDataGridRenderer draws the column's cells in a grid instead of text
 local ColumnMixin = {}
 lib.ColumnMixin = ColumnMixin
 
@@ -80,6 +81,7 @@ function ColumnMixin:Init(def)
     self.read = def.value
     self.cellText = def.text
     self.align = def.align or lib.aligns.left
+    self.renderer = def.renderer
 end
 
 ---What a grid's cell shows for the row: the definition's text function, else a tick or a cross for
