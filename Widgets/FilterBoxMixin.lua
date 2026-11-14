@@ -49,8 +49,17 @@ end
 ---where they should; coloured by kind otherwise. The clear button shows when there is text.
 function FilterBoxMixin:ShowText()
     local text = self.filterText
-    self.edit:SetText(self.edit:HasFocus() and text or self.skin:Highlight(self.view.schema, text))
+    self.edit:SetText(self.edit:HasFocus() and lib.ToEditBox(text) or self.skin:Highlight(self.view.schema, text))
     self.clear:SetShown(text ~= "")
+end
+
+---Where character `pos` of the text sits in the edit box, counted from 0, every | before it
+---taking two there.
+---@param pos number
+---@return number
+function FilterBoxMixin:EditPosition(pos)
+    local _, bars = self.filterText:sub(1, pos - 1):gsub("|", "")
+    return pos - 1 + bars
 end
 
 ---Shows the view's filter and drops the hint.
@@ -76,10 +85,10 @@ function FilterBoxMixin:Apply()
     ---@cast err LibDataGridError
     self.hint:SetText(err.message)
     self.hint:Show()
-    -- The edit box counts from 0 and stops before `stop`; the parser counts from 1, to `finish`.
+    -- The edit box stops before `stop`; the parser's `finish` is the last character it is about.
     self.edit:SetFocus()
-    self.edit:SetCursorPosition(err.pos - 1)
-    self.edit:HighlightText(err.pos - 1, err.finish)
+    self.edit:SetCursorPosition(self:EditPosition(err.pos))
+    self.edit:HighlightText(self:EditPosition(err.pos), self:EditPosition(err.finish + 1))
 end
 
 ---@param event string
@@ -104,7 +113,7 @@ local function OnTextChanged(edit, userInput)
     -- Without focus nobody is typing, whatever the game says: the box holds the coloured text then.
     if not userInput or not edit:HasFocus() then return end
     local box = edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]
-    box.filterText = edit:GetText()
+    box.filterText = lib.FromEditBox(edit:GetText())
     box.hint:Hide()
     box.clear:SetShown(box.filterText ~= "")
 end

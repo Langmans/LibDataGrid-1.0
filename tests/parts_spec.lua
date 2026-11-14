@@ -39,19 +39,16 @@ describe("the skin's syntax highlighting", function()
         )
     end)
 
-    -- An edit box shows || as two bars and does not end a colour on it (seen on Forever), so a | is
-    -- left as it is, uncoloured, and so is a piece right against it, which would else start with
-    -- |c straight after the bar.
-    it("leaves a | as it is, uncoloured, and the piece right against it too", function()
+    -- An edit box keeps a typed | as || and shows || as one bar (seen on Forever), as font strings do.
+    it("doubles a | so the game shows one bar rather than reading a code", function()
         assert.are.equal(
-            "|cffffd100[Rare]|r |cff80c0ff=|r |cfffffffftrue|r | |cffffd100[Level]|r |cff80c0ff>|r |cffffffff1|r",
-            lib.SkinMixin:Highlight(schema, "[Rare] = true | [Level] > 1")
+            "|cffffd100[Rare]|r |cff80c0ff=|r |cfffffffftrue|r |cffff8040|||r |cffff8040!|r|cffffd100[Level]|r |cff80c0ff>|r |cffffffff1|r",
+            lib.SkinMixin:Highlight(schema, "[Rare] = true | ![Level] > 1")
         )
         assert.are.equal(
-            "|cffffd100[Rare]|r |cff80c0ff=|r |cfffffffftrue|r |!|cffffd100[Level]|r",
-            lib.SkinMixin:Highlight(schema, "[Rare] = true |![Level]")
+            '|cffffd100[Name]|r |cff80c0ff=|r |cffffffff"a||b"|r',
+            lib.SkinMixin:Highlight(schema, '[Name] = "a|b"')
         )
-        assert.are.equal('|cffffd100[Name]|r |cff80c0ff=|r "a|b"', lib.SkinMixin:Highlight(schema, '[Name] = "a|b"'))
     end)
 
     it("colours what does not parse as an error, and text it never reached as it is", function()

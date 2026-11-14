@@ -81,6 +81,24 @@ function lib.NewFilter(join)
     return { join = join or lib.joins["and"], children = {} }
 end
 
+-- An edit box keeps a typed | as || and shows || as one bar, as font strings do. Text goes in
+-- with its bars doubled and comes out with them single, so the rest of the library only ever sees
+-- what was typed.
+
+---Text as an edit box or a font string should get it.
+---@param text string
+---@return string
+function lib.ToEditBox(text)
+    return (text:gsub("|", "||"))
+end
+
+---Text as typed, from what an edit box holds.
+---@param text string
+---@return string
+function lib.FromEditBox(text)
+    return (text:gsub("||", "|"))
+end
+
 ---A deep copy of a filter tree or a sort, so a caller's and the view's never share a table.
 ---@generic T
 ---@param value T

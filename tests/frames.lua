@@ -180,9 +180,10 @@ function M.Click(frame, button)
     M.Fire(frame, "OnClick", button or "LeftButton")
 end
 
----Types text into an edit box as the user would: the text, then OnTextChanged from user input.
+---Types text into an edit box as the user would: the text, then OnTextChanged from user input. As
+---in the game, a typed | is kept as || (seen on Forever), which the box shows as one bar.
 function M.Type(box, text)
-    box:SetText(text)
+    box:SetText((text:gsub("|", "||")))
     M.Fire(box, "OnTextChanged", true)
 end
 

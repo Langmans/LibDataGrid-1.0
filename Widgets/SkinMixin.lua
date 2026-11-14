@@ -52,23 +52,20 @@ function SkinMixin:TokenColour(kind)
     return TOKEN_COLOURS[kind]
 end
 
----Filter text with colour codes, each piece in its kind's colour, for an edit box to show (not for
----parsing). An edit box shows || as two bars rather than one, and a colour code next to a bar goes
----wrong, so a piece with a | in it stays as it is, uncoloured, and so does a piece right against it.
+---Filter text with colour codes, each piece in its kind's colour, for an edit box or a font string
+---to show (not for parsing); a | doubled, as they show || as one bar.
 ---@param schema LibDataGridSchema
 ---@param text string
 ---@return string
 function SkinMixin:Highlight(schema, text)
-    local parts, at, afterBar = {}, 1, false
+    local ToEditBox, parts, at = lib.ToEditBox, {}, 1
     for _, token in ipairs((schema:Tokens(text))) do
-        local gap, piece = text:sub(at, token.start - 1), text:sub(token.start, token.finish)
-        parts[#parts + 1] = gap
-        local plain = piece:find("|", 1, true) ~= nil or (afterBar and gap == "")
-        parts[#parts + 1] = plain and piece or ("|c" .. self:TokenColour(token.kind) .. piece .. "|r")
-        afterBar = plain and piece:sub(-1) == "|"
+        parts[#parts + 1] = ToEditBox(text:sub(at, token.start - 1))
+        local piece = ToEditBox(text:sub(token.start, token.finish))
+        parts[#parts + 1] = "|c" .. self:TokenColour(token.kind) .. piece .. "|r"
         at = token.finish + 1
     end
-    parts[#parts + 1] = text:sub(at)
+    parts[#parts + 1] = ToEditBox(text:sub(at))
     return table.concat(parts)
 end
 

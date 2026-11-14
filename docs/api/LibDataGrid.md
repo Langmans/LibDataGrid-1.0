@@ -186,6 +186,25 @@ function LibDataGrid.Copy(value)
 |------|-------------|
 | `table \| number \| string \| boolean` |  |
 
+### FromEditBox
+
+```lua
+function LibDataGrid.FromEditBox(text)
+  -> string
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `string` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
+
 ### IsBlank
 
 ```lua
@@ -242,4 +261,23 @@ function LibDataGrid.OperatorsFor(type)
 | Type | Description |
 |------|-------------|
 | `LibDataGridOperator[]` |  |
+
+### ToEditBox
+
+```lua
+function LibDataGrid.ToEditBox(text)
+  -> string
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `text` | `string` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
 

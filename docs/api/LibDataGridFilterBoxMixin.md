@@ -32,6 +32,28 @@ function LibDataGridFilterBoxMixin:Clear()
 
 Empties the filter.
 
+### EditPosition
+
+```lua
+function LibDataGridFilterBoxMixin:EditPosition(pos)
+  -> number
+```
+
+Where character `pos` of the text sits in the edit box, counted from 0, every | before it  
+taking two there.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `pos` | `number` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `number` |  |
+
 ### GetText
 
 ```lua

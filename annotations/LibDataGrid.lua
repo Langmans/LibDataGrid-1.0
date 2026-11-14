@@ -18,6 +18,8 @@
 ---@field OperatorsFor fun(type: string): LibDataGridOperator[]
 ---@field NewFilter fun(join: string?): LibDataGridGroup
 ---@field Copy fun(value: table|LibDataGridValue): table|LibDataGridValue
+---@field ToEditBox fun(text: string): string a | doubled, as an edit box or font string wants it
+---@field FromEditBox fun(text: string): string a doubled | back to one, as typed
 ---@field NewSchema fun(self: LibDataGrid, defs: LibDataGridColumnDef[], ...: table): LibDataGridSchema
 ---@field ColumnMixin LibDataGridColumnMixin
 ---@field ParserMixin LibDataGridParserMixin

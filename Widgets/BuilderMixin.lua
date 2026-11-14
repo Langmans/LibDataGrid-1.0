@@ -211,7 +211,7 @@ function BuilderMixin:DrawLine(line, entry)
         line.valuePicker:SetChoices(values, texts, value --[[@as LibDataGridValue?]])
         Place(line.valuePicker, x, VALUE)
     elseif op.takes then
-        line.valueEdit:SetText(ValueText(column, value))
+        line.valueEdit:SetText(lib.ToEditBox(ValueText(column, value)))
         Place(line.valueEdit, x, VALUE)
     end
     Mark(line.valueEdit, true)
@@ -317,7 +317,7 @@ local function OnValueTyped(edit, userInput)
     local line = LineOf(edit)
     local node = line.entry.node --[[@as LibDataGridCondition]]
     local column = line.builder.view.schema:Column(node.column) --[[@as LibDataGridColumnMixin]]
-    local op, text = lib.operators[node.op], edit:GetText()
+    local op, text = lib.operators[node.op], lib.FromEditBox(edit:GetText())
     local value, ok
     if op.takes == takes.list then
         value, ok = {}, true
@@ -328,7 +328,8 @@ local function OnValueTyped(edit, userInput)
         end
         value = ok and #value > 0 and value or nil
     elseif op.takes == takes.range then
-        local low, high = Parse(column, line.valueEdit:GetText()), Parse(column, line.valueHigh:GetText())
+        local low = Parse(column, lib.FromEditBox(line.valueEdit:GetText()))
+        local high = Parse(column, lib.FromEditBox(line.valueHigh:GetText()))
         ok = Parse(column, text) ~= nil
         value = low ~= nil and high ~= nil and { low, high } or nil
     else
