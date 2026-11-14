@@ -76,16 +76,29 @@ function GridMixin:AddColumn(entry)
     local head = CreateFrame("Button", nil, self) --[[@as LibDataGridGridHead]]
     head.key = entry.column.key
     head:SetHeight(HEADER)
+    local align = entry.column.align
     head.label = head:CreateFontString(nil, "OVERLAY", "GameFontNormalSmall")
-    head.label:SetPoint("LEFT", PAD, 0)
-    head.label:SetJustifyH("LEFT")
+    head.label:SetJustifyH(align)
     head.label:SetText(entry.column.label)
     head.arrow = head:CreateTexture(nil, "ARTWORK")
     head.arrow:SetSize(9, 8)
-    head.arrow:SetPoint("LEFT", head.label, "RIGHT", 3, 0)
     head.arrow:SetTexture(ARROW)
     head.order = head:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-    head.order:SetPoint("LEFT", head.arrow, "RIGHT", 1, 0)
+    -- The sort marker after the label; before it for a right-aligned column, so the label keeps
+    -- to the right edge, over its values.
+    if align == lib.aligns.right then
+        head.label:SetPoint("RIGHT", -PAD, 0)
+        head.arrow:SetPoint("RIGHT", head.label, "LEFT", -3, 0)
+        head.order:SetPoint("RIGHT", head.arrow, "LEFT", -1, 0)
+    else
+        head.label:SetPoint(
+            align == lib.aligns.center and "CENTER" or "LEFT",
+            align == lib.aligns.center and 0 or PAD,
+            0
+        )
+        head.arrow:SetPoint("LEFT", head.label, "RIGHT", 3, 0)
+        head.order:SetPoint("LEFT", head.arrow, "RIGHT", 1, 0)
+    end
     head:SetHighlightTexture(HIGHLIGHT, "ADD")
     head:SetScript("OnClick", OnHeadClick)
     self.skin:Font(head.label)
@@ -139,7 +152,7 @@ function GridMixin:Layout()
             local cell = line.cells[i]
             if not cell then
                 cell = line:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
-                cell:SetJustifyH("LEFT")
+                cell:SetJustifyH(entry.column.align)
                 cell:SetWordWrap(false)
                 self.skin:Font(cell)
                 line.cells[i] = cell

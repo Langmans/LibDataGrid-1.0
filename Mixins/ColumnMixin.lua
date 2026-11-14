@@ -66,6 +66,7 @@ end
 ---@field choices? LibDataGridChoice[]|fun(): LibDataGridChoice[]
 ---@field read? fun(row: LibDataGridRow): LibDataGridValue?
 ---@field cellText? fun(row: LibDataGridRow): string
+---@field align string lib.aligns
 local ColumnMixin = {}
 lib.ColumnMixin = ColumnMixin
 
@@ -78,6 +79,7 @@ function ColumnMixin:Init(def)
     self.choices = def.choices
     self.read = def.value
     self.cellText = def.text
+    self.align = def.align or lib.aligns.left
 end
 
 ---What a grid's cell shows for the row: the definition's text function, else a tick or a cross for

@@ -7,6 +7,7 @@
 ---@field events table<string, string>
 ---@field types table<string, string>
 ---@field joins table<string, string>
+---@field aligns table<string, string>
 ---@field errors table<string, string>
 ---@field tokenKinds table<string, string>
 ---@field takes table<string, string>
@@ -81,6 +82,7 @@
 ---@field text? fun(row: LibDataGridRow): string what a grid's cell shows; the value as text when not given
 ---@field choices? LibDataGridChoice[]|fun(): LibDataGridChoice[] an enum's choices
 ---@field caseSensitive? boolean compare a string column's text as it is
+---@field align? string how cells and header line up (lib.aligns); left when not given
 ---@field mixin? table goes over ColumnMixin
 
 ---@class LibDataGridCondition

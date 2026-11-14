@@ -38,6 +38,13 @@ lib.types = {
     date = "date",
 }
 
+-- How a column's cells and header line up, as SetJustifyH takes it.
+lib.aligns = {
+    left = "LEFT",
+    center = "CENTER",
+    right = "RIGHT",
+}
+
 -- How the conditions in a group combine.
 lib.joins = {
     ["and"] = "and",

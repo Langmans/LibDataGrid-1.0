@@ -52,11 +52,12 @@ local function Schema()
     end
     return lib:NewSchema({
         { key = "name", label = "Name" },
-        { key = "level", label = "Level", type = T.number },
+        { key = "level", label = "Level", type = T.number, align = lib.aligns.right },
         { key = "family", label = "Family", type = T.enum, choices = choices },
         {
             key = "speed",
             label = "Speed",
+            align = lib.aligns.right,
             type = T.number,
             ---@param row LibDataGridRow
             ---@return string
@@ -64,7 +65,7 @@ local function Schema()
                 return ("%.1f"):format(row.speed)
             end,
         },
-        { key = "rare", label = "Rare", type = T.boolean },
+        { key = "rare", label = "Rare", type = T.boolean, align = lib.aligns.center },
         { key = "zone", label = "Zone" },
         { key = "seen", label = "Seen", type = T.date },
     })

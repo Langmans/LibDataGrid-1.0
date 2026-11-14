@@ -42,6 +42,8 @@ local schema = DG:NewSchema({
 | `value` | `function(row)` giving the row's value; `row[key]` when not given |
 | `choices` | an enum's `{ value, text }` list, or a function returning one (asked each time, so it can follow the locale) |
 | `caseSensitive` | compare a string column's text as it is; text compares without case by default |
+| `align` | `DG.aligns.left` (default), `center` or `right`: how a grid's cells and header line up; a right-aligned header has its sort marker before the label |
+| `text` | `function(row)` giving what a grid's cell shows; the value as filter text writes it when not given |
 | `mixin` | a table over `ColumnMixin`, to change how this column reads, writes or sorts values |
 
 A date is a time in seconds, as `time()` gives it. A row is any table your

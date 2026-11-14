@@ -22,6 +22,7 @@
 | SkinMixin | `LibDataGridSkinMixin` |  |
 | SortMixin | `LibDataGridSortMixin` |  |
 | ViewMixin | `LibDataGridViewMixin` |  |
+| aligns | `table<string, string>` |  |
 | builders | `number?` | how many Builder dialogs there are, for their frame names |
 | errors | `table<string, string>` |  |
 | events | `table<string, string>` |  |

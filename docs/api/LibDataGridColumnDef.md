@@ -2,6 +2,7 @@
 
 | Name | Type | Description |
 |------|------|-------------|
+| align | `string?` | how cells and header line up (lib.aligns); left when not given |
 | caseSensitive | `boolean?` | compare a string column's text as it is |
 | choices | `LibDataGridChoice[] \| fun():LibDataGridChoice[]?` | an enum's choices |
 | key | `string` |  |

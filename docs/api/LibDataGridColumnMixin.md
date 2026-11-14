@@ -2,6 +2,7 @@
 
 | Name | Type | Description |
 |------|------|-------------|
+| align | `string` | lib.aligns |
 | caseSensitive | `boolean?` |  |
 | cellText | `(fun(row: LibDataGridRow):string)?` |  |
 | choices | `LibDataGridChoice[] \| fun():LibDataGridChoice[]?` |  |

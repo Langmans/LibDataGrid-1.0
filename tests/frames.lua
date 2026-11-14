@@ -93,6 +93,9 @@ end
 function Region:GetPoint(index)
     return unpack(self.points[index or 1] or {})
 end
+function Region:SetJustifyH(justify)
+    self.justify = justify
+end
 function Region:SetTextColor(r, g, b)
     self.textColor = { r, g, b }
 end

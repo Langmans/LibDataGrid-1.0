@@ -145,6 +145,27 @@ describe("a grid", function()
         )
     end)
 
+    it("aligns a column's cells and header as its definition says, left when it says nothing", function()
+        local A = lib.aligns
+        local schema = lib:NewSchema({
+            { key = "name" },
+            { key = "level", type = lib.types.number, align = A.right },
+            { key = "rare", type = lib.types.boolean, align = A.center },
+        })
+        local own = lib:CreateGrid(UIParent, schema:NewView())
+        own:SetSize(300, 100)
+        own:AddFillColumn("name")
+        own:AddFillColumn("level")
+        own:AddFillColumn("rare")
+        own:SetRows({ { name = "Prowler", level = 10, rare = true } })
+        local cells, heads = {}, {}
+        for i = 1, 3 do
+            cells[i], heads[i] = own.lines[1].cells[i].justify, own.heads[i].label.justify
+        end
+        assert.are.same({ "LEFT", "RIGHT", "CENTER" }, cells)
+        assert.are.same({ "LEFT", "RIGHT", "CENTER" }, heads)
+    end)
+
     it("says plainly when a column is not in the schema", function()
         assert.has_error(function()
             grid:AddFillColumn("diet")
