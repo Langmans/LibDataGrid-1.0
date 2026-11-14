@@ -204,6 +204,7 @@ function M.Install()
     M.ctrl = false
     UIParent = newRegion()
     UISpecialFrames = {}
+    SlashCmdList = {}
     function CreateFrame(kind, name, parent, template)
         local frame = newRegion({ kind = kind, name = name, parent = parent or UIParent, template = template })
         if name then _G[name] = frame end

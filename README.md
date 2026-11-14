@@ -23,8 +23,10 @@ local shown = {}
 view:Refresh(beasts, shown)
 ```
 
-This first version is the core: columns, filters, sorting and events, with no
-frames. A filter box, a Builder dialog and a grid view come next.
+On top of that, three widgets: a filter box (the text, Apply, the error under
+it), a grid (headers that sort, Ctrl for a second key, a scrollbar) and a Builder
+dialog for AND/OR groups with column, operator and value chips. All plain
+frames, with a skin an addon can swap for its own look.
 
 ## Docs
 

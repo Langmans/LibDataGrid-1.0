@@ -15,3 +15,10 @@
 - FilterChanged and SortChanged through the view's own registry, Blizzard's
   CallbackRegistryMixin or CallbackHandler-1.0; each adapter, and any of a
   caller's, comes from the EventsMixin base.
+- Widgets: a filter box (Apply, the parser's error under it, the text it is
+  about highlighted), a grid (fixed and fill columns, sorting headers with
+  Ctrl for more keys and 1/2/3 markers, a scrollbar, OnRowClick) and a Builder
+  dialog (AND/OR and NOT chips, column/operator/value chips, add and remove,
+  Apply or Cancel). Plain frames on every client, a SkinMixin for an addon's
+  own look, and DG.L for their words.
+- /libdatagrid in development copies: a demo window with the widgets.

@@ -30,7 +30,35 @@ flowchart LR
     Passes --> Refresh
     Sort --> Refresh --> Shown(["shown rows"])
     View -- FilterChanged / SortChanged --> Events
+    subgraph Widgets
+        FilterBox["FilterBoxMixin<br/>text, Apply, error hint"]
+        Grid["GridMixin<br/>headers, rows, scrollbar"]
+        Builder["BuilderMixin<br/>groups and chips, on a copy"]
+        Parts["SkinMixin · ScrollBarMixin · PickerMixin"]
+    end
+    View -- OnViewChanged --> FilterBox & Grid
+    FilterBox -- SetFilterText --> View
+    FilterBox --> Builder -- SetFilterModel --> View
+    Grid -- ToggleSort / Refresh --> View
+    Parts --> FilterBox & Grid & Builder
 ```
+
+## Widgets
+
+The widgets are frames with a mixin over them, made by `DG:CreateFilterBox`,
+`DG:CreateGrid` and `DG:CreateBuilder`, each taking a skin and the caller's
+mixins. They are built from plain frames (a Slider for the scrollbar, buttons
+for the pickers) rather than ScrollBox, TableBuilder or the game's dropdowns,
+which differ between Classic Era and Forever or are missing from Era. A view
+keeps a list of its widgets (`AddWidget`) and calls `OnViewChanged(event)` on
+each before the events adapter: the adapter is the addon's to choose, and some
+adapters give no way to listen at all.
+
+A list (the grid's rows, the pick list, the Builder's lines) has a fixed number
+of line frames and fills them from the scrollbar's offset, so scrolling makes no
+frames and no tables. The Builder walks the filter tree recursively into a list
+of entries (group, condition, add line, each with its depth) and draws the
+entries from the offset; every change edits the tree in place and draws again.
 
 ## Patterns
 

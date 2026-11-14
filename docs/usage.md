@@ -167,6 +167,71 @@ local view = schema:NewView(MessageEvents)
 
 A view made with `DG.EventsMixin` alone sends no events at all.
 
+## Widgets
+
+Three widgets show a view, all plain frames so they look and work the same on
+Classic Era and Forever. Each follows the view on its own (the view tells its
+widgets of every change, whichever events adapter it has).
+
+```lua
+local box = DG:CreateFilterBox(panel, view)        -- filter text, Apply, Builder button
+box:SetPoint("TOPLEFT", 8, -8)
+box:SetPoint("TOPRIGHT", -8, -8)
+
+local grid = DG:CreateGrid(panel, view)
+grid:SetPoint("TOPLEFT", box, "BOTTOMLEFT", 0, -4)
+grid:SetSize(560, 300)
+grid:AddFillColumn("name", 2)                       -- a share of the room, by weight
+grid:AddFixedWidthColumn("level", 50)
+grid:AddFillColumn("family")
+grid:SetRows(beasts)                                -- again, or grid:Refresh(), when they change
+```
+
+- **Filter box**: Enter or Apply applies the text; text that does not parse
+  shows the parser's message under the box and highlights the part it is about.
+  Escape goes back to the view's filter. Builder opens the box's Builder.
+- **Grid**: a header row and the rows that pass, in the view's order, with a
+  scrollbar. A header click sorts by that column (up, down, off), Ctrl-click adds
+  it as the next key, and the headers show an arrow and the order 1, 2, 3. A cell
+  shows the column's `text(row)` when the definition has one, else the value as
+  filter text writes it. A row click goes to `OnRowClick(row, button)`:
+
+  ```lua
+  local grid = DG:CreateGrid(panel, view, nil, {
+      OnRowClick = function(grid, row, button) MyAddon:ShowBeast(row) end,
+  })
+  ```
+
+- **Builder** (`DG:CreateBuilder(view)`, or the filter box's button): a dialog
+  over a copy of the filter, a line per group (AND/OR chip, NOT chip) and per
+  condition (column, operator and value chips), with `+ condition`, `+ group`
+  and `x`. A condition without a valid value stays in the copy and drops out of
+  the filter, so nothing is lost while it is filled in. Apply hands the copy to
+  the view; Cancel, the close button or Escape drops it.
+
+### Their look
+
+Every widget takes a skin: `DG.SkinMixin` draws plain (a dark backdrop, dark
+fields, the Blizzard templates' fonts and buttons). An addon with its own look
+passes a skin made from it:
+
+```lua
+local skin = CreateFromMixins(DG.SkinMixin, {
+    Backdrop = function(self, frame) frame:SetTemplate("Transparent") end,   -- ElvUI
+    Button = function(self, button) S:HandleButton(button) end,
+})
+local box = DG:CreateFilterBox(panel, view, skin)
+```
+
+The words (`Apply`, `Builder`, `+ condition`, ...) are in `DG.L`; an addon with
+its own locales sets them after loading.
+
+### Trying them in the game
+
+The library's own `.toc` (a development copy, not an embedded one) has
+`/libdatagrid`: a window with a filter box and a grid over sample beasts. The
+packager leaves it out of releases.
+
 ## Fixed sets
 
 Every method and field is in the generated [API docs](api/index.md). The fixed
