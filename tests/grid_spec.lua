@@ -59,6 +59,20 @@ describe("a grid", function()
         assert.are.same({ "10|Timber Wolf|Wolf", "6|Mangy Wolf|Wolf" }, lines())
     end)
 
+    it("stripes every other row, the stripe moving with its row when scrolled", function()
+        local function striped()
+            local out = {}
+            for i, line in ipairs(grid.lines) do
+                out[i] = line.stripe:IsShown()
+            end
+            return out
+        end
+        assert.are.same({ false, true, false }, striped())
+        frames.Fire(grid.body, "OnMouseWheel", -1)
+        assert.are.same({ true, false, true }, striped())
+        assert.is_table(grid.lines[1].stripe.color)
+    end)
+
     it("shows more lines when it grows, and fewer when it shrinks", function()
         grid:SetSize(412, 20 + 10 * 18)
         frames.Fire(grid, "OnSizeChanged")

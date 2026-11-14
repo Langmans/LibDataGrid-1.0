@@ -6,4 +6,5 @@ Inherits: Button, Frame
 |------|------|-------------|
 | cells | `FontString[]` |  |
 | row | `table?` |  |
+| stripe | `Texture` | the back shown on every other row |
 

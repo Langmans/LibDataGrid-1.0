@@ -70,3 +70,17 @@ A label's font; the widgets make labels with GameFontHighlightSmall.
 |------|------|-------------|
 | `fontString` | `FontString` |  |
 
+### Stripe
+
+```lua
+function LibDataGridSkinMixin:Stripe(texture)
+```
+
+The faint back of every other row in a grid.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `texture` | `Texture` |  |
+

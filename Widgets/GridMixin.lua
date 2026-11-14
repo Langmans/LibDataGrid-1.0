@@ -26,6 +26,7 @@ local DOWN, UP = { 0, 0.5625, 0, 1 }, { 0, 0.5625, 1, 0 }
 
 ---@class LibDataGridGridLine: Button
 ---@field cells FontString[]
+---@field stripe Texture the back shown on every other row
 ---@field row LibDataGridRow?
 
 ---@class LibDataGridGridMixin: Frame, LibDataGridWidget
@@ -122,6 +123,9 @@ function GridMixin:Layout()
         line:SetHighlightTexture(HIGHLIGHT, "ADD")
         line:RegisterForClicks("LeftButtonUp", "RightButtonUp")
         line:SetScript("OnClick", OnLineClick)
+        line.stripe = line:CreateTexture(nil, "BACKGROUND")
+        line.stripe:SetAllPoints()
+        self.skin:Stripe(line.stripe)
         line.cells = {}
         self.lines[index] = line
     end
@@ -155,9 +159,12 @@ function GridMixin:Draw()
     self.bar:SetRange(self.count, self.visible)
     for index = 1, self.visible do
         local line = self.lines[index]
-        local row = self.shown[index + self.bar.offset]
+        local at = index + self.bar.offset
+        local row = self.shown[at]
         line.row = row
         line:SetShown(row ~= nil)
+        -- By the row's place in the list, not the line's, so a stripe scrolls with its row.
+        line.stripe:SetShown(at % 2 == 0)
         if row then
             for i, entry in ipairs(self.columns) do
                 line.cells[i]:SetText(entry.column:CellText(row))
