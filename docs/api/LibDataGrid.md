@@ -3,6 +3,7 @@
 | Name | Type | Description |
 |------|------|-------------|
 | BlizzardEventsMixin | `LibDataGridBlizzardEventsMixin` |  |
+| BuilderMixin | `LibDataGridBuilderMixin` |  |
 | CallbackHandlerEventsMixin | `LibDataGridCallbackHandlerEventsMixin` |  |
 | ColumnMixin | `LibDataGridColumnMixin` |  |
 | CompilerMixin | `LibDataGridCompilerMixin` |  |
@@ -20,6 +21,7 @@
 | SkinMixin | `LibDataGridSkinMixin` |  |
 | SortMixin | `LibDataGridSortMixin` |  |
 | ViewMixin | `LibDataGridViewMixin` |  |
+| builders | `number?` | how many Builder dialogs there are, for their frame names |
 | errors | `table<string, string>` |  |
 | events | `table<string, string>` |  |
 | grammar | `LibDataGridOperator[]` | the operators, in the order a picker lists them |
@@ -34,6 +36,27 @@
 | types | `table<string, string>` |  |
 
 ## Methods
+
+### CreateBuilder
+
+```lua
+function LibDataGrid:CreateBuilder(view, skin, ...)
+  -> LibDataGridBuilderMixin
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `view` | `LibDataGridView` |  |
+| `skin` | `LibDataGridSkinMixin?` |  |
+| `...` | `table` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `LibDataGridBuilderMixin` |  |
 
 ### CreateFilterBox
 

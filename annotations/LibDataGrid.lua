@@ -38,6 +38,9 @@
 ---@field PickerMixin LibDataGridPickerMixin
 ---@field FilterBoxMixin LibDataGridFilterBoxMixin
 ---@field GridMixin LibDataGridGridMixin
+---@field BuilderMixin LibDataGridBuilderMixin
+---@field builders number? how many Builder dialogs there are, for their frame names
+---@field CreateBuilder fun(self: LibDataGrid, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridBuilderMixin
 ---@field CreateGrid fun(self: LibDataGrid, parent: Frame, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridGridMixin
 ---@field CreateScrollBar fun(self: LibDataGrid, list: Frame, OnScroll: fun(offset: number)): LibDataGridScrollBarMixin
 ---@field CreatePicker fun(self: LibDataGrid, parent: Frame, skin: LibDataGridSkinMixin?, OnPick: fun(value: LibDataGridValue)): LibDataGridPickerMixin

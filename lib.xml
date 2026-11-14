@@ -22,5 +22,6 @@
     <Script file="Widgets\PickerMixin.lua"/>
     <Script file="Widgets\FilterBoxMixin.lua"/>
     <Script file="Widgets\GridMixin.lua"/>
+    <Script file="Widgets\BuilderMixin.lua"/>
     <Script file="Mixins\ViewMixin.lua"/>
 </Ui>

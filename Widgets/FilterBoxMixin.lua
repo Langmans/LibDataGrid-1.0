@@ -14,9 +14,18 @@ local ERROR_COLOUR = { 1, 0.3, 0.3 }
 ---@field skin LibDataGridSkinMixin
 ---@field edit EditBox
 ---@field apply Button
+---@field open Button opens the Builder
 ---@field hint FontString
+---@field builder LibDataGridBuilderMixin? made when first opened
 local FilterBoxMixin = {}
 lib.FilterBoxMixin = FilterBoxMixin
+
+---Opens the Builder on the view's filter; the box keeps one, made the first time.
+function FilterBoxMixin:OpenBuilder()
+    local builder = self.builder or lib:CreateBuilder(self.view, self.skin)
+    self.builder = builder
+    builder:Open()
+end
 
 ---Shows the view's filter and drops the hint.
 function FilterBoxMixin:Reset()
@@ -70,6 +79,11 @@ local function OnApplyClick(button)
     (button:GetParent() --[[@as LibDataGridFilterBoxMixin]]):Apply()
 end
 
+---@param button Button
+local function OnOpenClick(button)
+    (button:GetParent() --[[@as LibDataGridFilterBoxMixin]]):OpenBuilder()
+end
+
 ---A filter box for a view, with the caller's mixins over FilterBoxMixin. The owner sets its width
 ---and places it; it is two rows high (the box, and the hint under it).
 ---@param parent Frame
@@ -82,9 +96,15 @@ function lib:CreateFilterBox(parent, view, skin, ...)
     box.view, box.skin = view, skin or lib.SkinMixin
     box:SetHeight(ROW + HINT)
 
+    box.open = CreateFrame("Button", nil, box, "UIPanelButtonTemplate")
+    box.open:SetSize(BUTTON, ROW)
+    box.open:SetPoint("TOPRIGHT")
+    box.open:SetText(lib.L.BUILDER)
+    box.open:SetScript("OnClick", OnOpenClick)
+
     box.apply = CreateFrame("Button", nil, box, "UIPanelButtonTemplate")
     box.apply:SetSize(BUTTON, ROW)
-    box.apply:SetPoint("TOPRIGHT")
+    box.apply:SetPoint("RIGHT", box.open, "LEFT", -4, 0)
     box.apply:SetText(lib.L.APPLY)
     box.apply:SetScript("OnClick", OnApplyClick)
 
@@ -105,6 +125,7 @@ function lib:CreateFilterBox(parent, view, skin, ...)
 
     box.skin:EditBox(box.edit)
     box.skin:Button(box.apply)
+    box.skin:Button(box.open)
     box.skin:Font(box.hint)
     view:AddWidget(box)
     box:Reset()
