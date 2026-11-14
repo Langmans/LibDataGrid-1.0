@@ -101,7 +101,8 @@ end
 ---@param edit EditBox
 ---@param userInput boolean
 local function OnTextChanged(edit, userInput)
-    if not userInput then return end
+    -- Without focus nobody is typing, whatever the game says: the box holds the coloured text then.
+    if not userInput or not edit:HasFocus() then return end
     local box = edit:GetParent() --[[@as LibDataGridFilterBoxMixin]]
     box.filterText = edit:GetText()
     box.hint:Hide()

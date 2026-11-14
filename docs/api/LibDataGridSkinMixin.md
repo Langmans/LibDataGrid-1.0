@@ -77,7 +77,9 @@ function LibDataGridSkinMixin:Highlight(schema, text)
   -> string
 ```
 
-Filter text with colour codes, each piece in its kind's colour, for showing (not for parsing).
+Filter text with colour codes, each piece in its kind's colour, for an edit box to show (not for  
+parsing). An edit box shows || as two bars rather than one, and a colour code next to a bar goes  
+wrong, so a piece with a | in it stays as it is, uncoloured, and so does a piece right against it.
 
 **Parameters:**
 
