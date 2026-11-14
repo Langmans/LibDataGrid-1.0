@@ -54,7 +54,16 @@ local function Schema()
         { key = "name", label = "Name" },
         { key = "level", label = "Level", type = T.number },
         { key = "family", label = "Family", type = T.enum, choices = choices },
-        { key = "speed", label = "Speed", type = T.number },
+        {
+            key = "speed",
+            label = "Speed",
+            type = T.number,
+            ---@param row LibDataGridRow
+            ---@return string
+            text = function(row)
+                return ("%.1f"):format(row.speed)
+            end,
+        },
         { key = "rare", label = "Rare", type = T.boolean },
         { key = "zone", label = "Zone" },
         { key = "seen", label = "Seen", type = T.date },
@@ -99,7 +108,7 @@ local function Open()
     demo.grid:AddFixedWidthColumn("speed", 50)
     demo.grid:AddFixedWidthColumn("rare", 50)
     demo.grid:AddFillColumn("zone")
-    demo.grid:AddFillColumn("seen")
+    demo.grid:AddFixedWidthColumn("seen", 125)
     demo.grid:SetRows(Rows())
     lib.demo = demo
 end
