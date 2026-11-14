@@ -48,8 +48,14 @@ end
 ---Shows the text: plain while the box is being typed in, so the cursor and a marked error sit
 ---where they should; coloured by kind otherwise. The clear button shows when there is text.
 function FilterBoxMixin:ShowText()
-    local text = self.filterText
-    self.edit:SetText(self.edit:HasFocus() and lib.ToEditBox(text) or self.skin:Highlight(self.view.schema, text))
+    local text, edit = self.filterText, self.edit
+    if edit:HasFocus() then
+        edit:SetText(lib.ToEditBox(text))
+    else
+        edit:SetText(self.skin:Highlight(self.view.schema, text))
+        -- From its start: the edit box keeps a long text scrolled to wherever the cursor was.
+        edit:SetCursorPosition(0)
+    end
     self.clear:SetShown(text ~= "")
 end
 

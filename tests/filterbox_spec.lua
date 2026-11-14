@@ -104,6 +104,11 @@ describe("a filter box", function()
             assert.truthy(box.edit:GetText():find("|c", 1, true))
         end)
 
+        it("shows a long text from its start once applied, not scrolled to its end", function()
+            enter("[Level] > 1 AND [Rare] = true")
+            assert.are.equal(0, box.edit.cursor)
+        end)
+
         it("shows the plain text while it is typed in, and colours what was typed when left", function()
             box.edit:SetFocus()
             assert.are.equal("[Level] > 1", box.edit:GetText())
