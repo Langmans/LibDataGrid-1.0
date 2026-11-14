@@ -13,6 +13,7 @@ Inherits: Frame, Region, ScriptRegion, Object, FrameScriptObject, ScriptRegionRe
 | join | `LibDataGridChip` |  |
 | negate | `LibDataGridChip` |  |
 | opPicker | `LibDataGridPickerMixin` |  |
+| rangeAnd | `FontString` | the and between BETWEEN's two boxes |
 | remove | `Button` |  |
 | valueEdit | `EditBox` |  |
 | valueHigh | `EditBox` |  |

@@ -9,7 +9,8 @@ if not lib.pending then return end
 
 local L, takes, T = lib.L, lib.takes, lib.types
 local WIDTH, LINES, LINE, INDENT, PAD, TITLE, FOOT = 560, 14, 24, 16, 10, 28, 56
-local COLUMN, OPERATOR, VALUE, HALF, CHIP, REMOVE = 120, 110, 150, 72, 44, 22
+-- BETWEEN's two boxes and the and between them take the room of one value box.
+local COLUMN, OPERATOR, VALUE, HALF, RANGE_AND, CHIP, REMOVE = 120, 110, 150, 59, 24, 44, 22
 local ERROR_COLOUR, NORMAL_COLOUR, OFF_COLOUR = { 1, 0.3, 0.3 }, { 1, 1, 1 }, { 0.5, 0.5, 0.5 }
 local BOOLEANS, BOOLEAN_TEXTS = { true, false }, { "true", "false" }
 
@@ -41,6 +42,7 @@ local KIND = { group = "group", condition = "condition", add = "add" }
 ---@field valuePicker LibDataGridPickerMixin
 ---@field valueEdit EditBox
 ---@field valueHigh EditBox
+---@field rangeAnd FontString the and between BETWEEN's two boxes
 ---@field addCondition Button
 ---@field addGroup Button
 
@@ -199,6 +201,7 @@ function BuilderMixin:DrawLine(line, entry)
         line.valueEdit:SetText(ends and column:FormatValue(ends[1]) or "")
         line.valueHigh:SetText(ends and column:FormatValue(ends[2]) or "")
         x = Place(line.valueEdit, x, HALF)
+        x = Place(line.rangeAnd, x, RANGE_AND)
         Place(line.valueHigh, x, HALF)
     elseif op.takes == takes.value and (column.type == T.enum or column.type == T.boolean) then
         local values, texts = BOOLEANS, BOOLEAN_TEXTS
@@ -435,6 +438,12 @@ local function NewLine(builder, index)
     end)
     line.valueEdit = ValueBox(line)
     line.valueHigh = ValueBox(line)
+    -- BETWEEN's and, in the operator's colour as the filter text under the lines writes it.
+    line.rangeAnd = line:CreateFontString(nil, "OVERLAY", "GameFontHighlightSmall")
+    line.rangeAnd:SetJustifyH("CENTER")
+    line.rangeAnd:SetText("|c" .. builder.skin:TokenColour(lib.tokenKinds.operator) .. L.RANGE_AND .. "|r")
+    builder.skin:Font(line.rangeAnd)
+    line.controls[#line.controls + 1] = line.rangeAnd
     return line
 end
 

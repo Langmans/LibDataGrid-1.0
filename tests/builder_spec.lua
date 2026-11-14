@@ -145,6 +145,18 @@ describe("the builder", function()
         assert.are.equal("a||b", line(2).valueEdit:GetText())
     end)
 
+    it("puts an and between BETWEEN's two boxes, in the operator's colour, and only there", function()
+        assert.is_false(line(2).rangeAnd:IsShown())
+        line(2).opPicker.OnPick(ops.between)
+        assert.is_true(line(2).rangeAnd:IsShown())
+        assert.are.equal(
+            "|c" .. lib.SkinMixin:TokenColour(lib.tokenKinds.operator) .. lib.L.RANGE_AND .. "|r",
+            line(2).rangeAnd:GetText()
+        )
+        line(2).opPicker.OnPick(ops.lt)
+        assert.is_false(line(2).rangeAnd:IsShown())
+    end)
+
     it("picks true or false for a yes/no column", function()
         line(2).columnPicker.OnPick("rare")
         assert.are.same({ true, false }, line(2).valuePicker.values)

@@ -17,6 +17,7 @@ local ENGLISH = {
     AND = "AND",
     OR = "OR",
     NOT = "NOT",
+    RANGE_AND = "and",
     ADD_CONDITION = "+ condition",
     ADD_GROUP = "+ group",
     REMOVE = "x",
