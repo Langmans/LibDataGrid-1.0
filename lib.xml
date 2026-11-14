@@ -21,5 +21,6 @@
     <Script file="Widgets\ScrollBarMixin.lua"/>
     <Script file="Widgets\PickerMixin.lua"/>
     <Script file="Widgets\FilterBoxMixin.lua"/>
+    <Script file="Widgets\GridMixin.lua"/>
     <Script file="Mixins\ViewMixin.lua"/>
 </Ui>

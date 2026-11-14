@@ -58,6 +58,7 @@ end
 ---@field caseSensitive? boolean
 ---@field choices? LibDataGridChoice[]|fun(): LibDataGridChoice[]
 ---@field read? fun(row: LibDataGridRow): LibDataGridValue?
+---@field cellText? fun(row: LibDataGridRow): string
 local ColumnMixin = {}
 lib.ColumnMixin = ColumnMixin
 
@@ -69,6 +70,18 @@ function ColumnMixin:Init(def)
     self.caseSensitive = def.caseSensitive
     self.choices = def.choices
     self.read = def.value
+    self.cellText = def.text
+end
+
+---What a grid's cell shows for the row: the definition's text function, else the value as filter
+---text writes it, nothing for a blank one.
+---@param row LibDataGridRow
+---@return string
+function ColumnMixin:CellText(row)
+    if self.cellText then return self.cellText(row) end
+    local value = self:Value(row)
+    if value == nil or lib.IsBlank(value) then return "" end
+    return self:FormatValue(value)
 end
 
 ---The row's value in this column: the definition's value function, else the row's field.

@@ -37,6 +37,8 @@
 ---@field ScrollBarMixin LibDataGridScrollBarMixin
 ---@field PickerMixin LibDataGridPickerMixin
 ---@field FilterBoxMixin LibDataGridFilterBoxMixin
+---@field GridMixin LibDataGridGridMixin
+---@field CreateGrid fun(self: LibDataGrid, parent: Frame, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridGridMixin
 ---@field CreateScrollBar fun(self: LibDataGrid, list: Frame, OnScroll: fun(offset: number)): LibDataGridScrollBarMixin
 ---@field CreatePicker fun(self: LibDataGrid, parent: Frame, skin: LibDataGridSkinMixin?, OnPick: fun(value: LibDataGridValue)): LibDataGridPickerMixin
 ---@field CreateFilterBox fun(self: LibDataGrid, parent: Frame, view: LibDataGridView, skin: LibDataGridSkinMixin?, ...: table): LibDataGridFilterBoxMixin
@@ -69,6 +71,7 @@
 ---@field label? string the name filter text and a header use; the key when not given
 ---@field type? string lib.types; string when not given
 ---@field value? fun(row: LibDataGridRow): LibDataGridValue? the row's value; row[key] when not given
+---@field text? fun(row: LibDataGridRow): string what a grid's cell shows; the value as text when not given
 ---@field choices? LibDataGridChoice[]|fun(): LibDataGridChoice[] an enum's choices
 ---@field caseSensitive? boolean compare a string column's text as it is
 ---@field mixin? table goes over ColumnMixin

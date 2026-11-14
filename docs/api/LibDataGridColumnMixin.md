@@ -3,6 +3,7 @@
 | Name | Type | Description |
 |------|------|-------------|
 | caseSensitive | `boolean?` |  |
+| cellText | `(fun(row: LibDataGridRow):string)?` |  |
 | choices | `LibDataGridChoice[] \| fun():LibDataGridChoice[]?` |  |
 | key | `string` |  |
 | label | `string` |  |
@@ -10,6 +11,28 @@
 | type | `string` |  |
 
 ## Methods
+
+### CellText
+
+```lua
+function LibDataGridColumnMixin:CellText(row)
+  -> string
+```
+
+What a grid's cell shows for the row: the definition's text function, else the value as filter  
+text writes it, nothing for a blank one.
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `row` | `LibDataGridRow` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `string` |  |
 
 ### Choices
 

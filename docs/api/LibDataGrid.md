@@ -9,6 +9,7 @@
 | EventsMixin | `LibDataGridEventsMixin` |  |
 | FilterBoxMixin | `LibDataGridFilterBoxMixin` |  |
 | FormatterMixin | `LibDataGridFormatterMixin` |  |
+| GridMixin | `LibDataGridGridMixin` |  |
 | L | `table<string, string>` | the widgets' words, English unless an addon sets them |
 | ParserMixin | `LibDataGridParserMixin` |  |
 | PickerMixin | `LibDataGridPickerMixin` |  |
@@ -55,6 +56,28 @@ function LibDataGrid:CreateFilterBox(parent, view, skin, ...)
 | Type | Description |
 |------|-------------|
 | `LibDataGridFilterBoxMixin` |  |
+
+### CreateGrid
+
+```lua
+function LibDataGrid:CreateGrid(parent, view, skin, ...)
+  -> LibDataGridGridMixin
+```
+
+**Parameters:**
+
+| Name | Type | Description |
+|------|------|-------------|
+| `parent` | `Frame` |  |
+| `view` | `LibDataGridView` |  |
+| `skin` | `LibDataGridSkinMixin?` |  |
+| `...` | `table` |  |
+
+**Returns:**
+
+| Type | Description |
+|------|-------------|
+| `LibDataGridGridMixin` |  |
 
 ### CreatePicker
 
