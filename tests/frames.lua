@@ -108,6 +108,16 @@ end
 function Region:SetFrameStrata(strata)
     self.strata = strata
 end
+function Region:GetFrameStrata()
+    return self.strata or "MEDIUM"
+end
+function Region:Click(button)
+    if self.scripts.OnClick then self.scripts.OnClick(self, button or "LeftButton") end
+end
+-- A font string's width in characters, || counting as the one bar it shows.
+function Region:GetStringWidth()
+    return #(self:GetText():gsub("||", "|"))
+end
 function Region:SetFrameLevel(level)
     self.level = level
 end

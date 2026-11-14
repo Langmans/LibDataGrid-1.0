@@ -30,3 +30,6 @@
   kind; the filter box shows its text coloured while not being typed in, and
   the Builder colours the filter under its lines. Colours from
   SkinMixin:TokenColour.
+- && and || for AND and OR; a | typed in an edit box handled as the game keeps
+  it (DG.ToEditBox, DG.FromEditBox).
+- In-game tests through WoWUnit, in development copies.

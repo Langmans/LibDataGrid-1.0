@@ -4,10 +4,12 @@
 |-------|-------------|
 | [LibDataGrid](LibDataGrid.md) |  |
 | [LibDataGridBlizzardEventsMixin](LibDataGridBlizzardEventsMixin.md) |  |
+| [LibDataGridBlizzardView](LibDataGridBlizzardView.md) |  |
 | [LibDataGridBuilderEntry](LibDataGridBuilderEntry.md) |  |
 | [LibDataGridBuilderLine](LibDataGridBuilderLine.md) |  |
 | [LibDataGridBuilderMixin](LibDataGridBuilderMixin.md) |  |
 | [LibDataGridCallbackHandlerEventsMixin](LibDataGridCallbackHandlerEventsMixin.md) |  |
+| [LibDataGridCallbackHandlerView](LibDataGridCallbackHandlerView.md) |  |
 | [LibDataGridChip](LibDataGridChip.md) |  |
 | [LibDataGridChoice](LibDataGridChoice.md) |  |
 | [LibDataGridColumnDef](LibDataGridColumnDef.md) |  |

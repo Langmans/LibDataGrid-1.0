@@ -4,10 +4,12 @@
 ## Author: Langmans
 ## Version: @project-version@
 ## X-License: MIT
+## OptionalDeps: WoWUnit
 
 Libs\LibStub\LibStub.lua
 Libs\CallbackHandler-1.0\CallbackHandler-1.0.lua
 lib.xml
 #@debug@
 Dev\Demo.lua
+InGame\Tests.lua
 #@end-debug@

@@ -52,9 +52,16 @@ The same setup as [LibGoThere-1.0](https://github.com/Langmans/LibGoThere-1.0):
 busted and luacov on Lua 5.1, StyLua, WoW Lua LS, all through `tests/check.lua`
 (`tests\setup-lua.ps1` builds the tools on Windows and turns on the hooks in
 `.githooks`). Line and type coverage are held at 100%, and `docs/api` is never
-edited by hand. `tests/wow.lua` stands in for the little of the game the library
-uses: `Mixin`, `CreateFromMixins`, `CallbackRegistryMixin`, `time`, `date`,
-`wipe`.
+edited by hand. `tests/wow.lua` and `tests/frames.lua` stand in for the little
+of the game the library uses: `Mixin`, `CreateFromMixins`,
+`CallbackRegistryMixin`, `time`, `date`, `wipe`, and frames.
+
+What only the real client can tell (the Blizzard code the library builds on,
+how edit boxes and font strings treat `|`) is tested in the game too:
+`InGame/Tests.lua` holds [WoWUnit](https://github.com/Jaliborc/WoWUnit) tests
+that run at login when WoWUnit is installed, in development copies only (the
+packager drops them). `tests/ingame_spec.lua` runs the same tests on the test
+client, so a test that fails in the game points at the client.
 
 ## License
 

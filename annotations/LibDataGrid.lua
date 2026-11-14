@@ -122,6 +122,14 @@
 ---A view as schema:NewView makes it, the caller's mixins included.
 ---@class LibDataGridView: LibDataGridViewMixin
 
+---A view made with BlizzardEventsMixin: the registry's events and methods.
+---@class LibDataGridBlizzardView: LibDataGridView, LibDataGridBlizzardEventsMixin
+---@field RegisterCallback fun(self: LibDataGridBlizzardView, event: string, func: fun(owner: string|table, view: LibDataGridView), owner: string|table)
+
+---A view made with CallbackHandlerEventsMixin: RegisterCallback as CallbackHandler-1.0 gives it.
+---@class LibDataGridCallbackHandlerView: LibDataGridView
+---@field RegisterCallback fun(owner: string|table, event: string, method: string|fun(event: string, view: LibDataGridView))
+
 ---@class CallbackHandlerRegistry
 ---@field Fire fun(self: CallbackHandlerRegistry, event: string, ...: table)
 
